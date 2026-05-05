@@ -24,6 +24,13 @@
 .DS_Store
 *.pem
 
+# referências de design e copy de origem (não vão pra produção)
+/refs/
+/copy/
+
+# SVG órfão (46MB com raster embedded; usamos o AVIF)
+/assets/logo-coders-university.svg
+
 # debug
 npm-debug.log*
 yarn-debug.log*
