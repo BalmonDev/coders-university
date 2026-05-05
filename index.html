@@ -28,7 +28,7 @@
     body { font-size: 1rem; }
     @media (max-width: 1024px) { html { font-size: 1.4vw; } }
     @media (max-width: 900px)  { html { font-size: 1.6vw; } }
-    @media (max-width: 640px)  { html { font-size: clamp(13px, 2.4vw, 16px); } }
+    @media (max-width: 640px)  { html { font-size: 3.5vw; } }
     @media (max-width: 380px)  { html { font-size: 13px; } }
     @media (min-width: 1920px) { html { font-size: 0.88vw; } }
 
@@ -668,7 +668,7 @@
       .hero-content { gap: 2.2222rem; padding: 2.7778rem 0 2.2222rem; }
       .hero-stack { gap: 1.6667rem; }
       .hero-text { gap: 1.3889rem; }
-      .hero-pill { flex-direction: column; gap: 0.5556rem; padding: 0.5556rem; align-items: flex-start; }
+      .hero-pill { flex-direction: row; gap: 0.5556rem; padding: 0.2778rem 0.2778rem 0.2778rem 0.5556rem; align-items: center; }
       .hero-pill-text { font-size: 0.8333rem; white-space: normal; }
       .hero-title { letter-spacing: -0.1042rem; }
       .hero-photo { height: 22.2222rem; margin: 1.1111rem -1.6667rem 0; }
@@ -1126,7 +1126,7 @@
       width: 100%;
       height: auto;
       background: #000;
-      margin: 0;
+      margin: 0 0 -1px -1px;
       pointer-events: none;
     }
 
@@ -1441,6 +1441,7 @@
       width: 25.0694rem;
       height: 4.6528rem;
       display: block;
+      margin-bottom: -1px;
     }
     .problem-quote {
       position: relative;
@@ -3631,7 +3632,7 @@
   <!-- ===== PROBLEM QUOTE — Figma 2210:34315 ===== -->
   <div class="problem-tab-bridge" aria-hidden="true">
     <svg class="problem-tab" viewBox="0 0 361 67" preserveAspectRatio="none">
-      <path d="M0 67H360.5V0H54.5L0 67Z" fill="#000"/>
+      <path d="M0 67H361V0H54.5L0 67Z" fill="#000"/>
     </svg>
   </div>
   <section class="problem-quote">
