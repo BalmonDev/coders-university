@@ -250,7 +250,11 @@ export function createGradientBlinds(container, options = {}) {
       uniforms.iMouse.value = [x, y];
     }
   };
-  canvas.addEventListener('pointermove', onPointerMove);
+  // Listen on the nearest section ancestor so the shader follows the cursor
+  // even when it's over child elements (cards, text, links) that would
+  // otherwise intercept events.
+  const eventTarget = container.closest('section') || container.parentElement || canvas;
+  eventTarget.addEventListener('pointermove', onPointerMove);
 
   const loop = (t) => {
     raf = requestAnimationFrame(loop);
@@ -282,7 +286,7 @@ export function createGradientBlinds(container, options = {}) {
     setPaused(value) { isPaused = !!value; },
     destroy() {
       if (raf) cancelAnimationFrame(raf);
-      canvas.removeEventListener('pointermove', onPointerMove);
+      eventTarget.removeEventListener('pointermove', onPointerMove);
       ro.disconnect();
       if (canvas.parentElement === container) container.removeChild(canvas);
       program?.remove?.();
