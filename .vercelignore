@@ -1,0 +1,12 @@
+# Reference templates (apenas pra inspiração, fora do build)
+refs/
+
+# Copy de origem
+copy/
+
+# SVG órfão pesado (46MB) — usamos o AVIF
+assets/logo-coders-university.svg
+
+# Files locais
+.DS_Store
+**/.DS_Store
