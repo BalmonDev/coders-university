@@ -1,0 +1,15 @@
+<svg width="875" height="482" viewBox="0 0 875 482" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<rect width="875" height="482" fill="#212121"/>
+<rect width="830" height="340" transform="translate(20 42)" fill="url(#pattern0_4105_2311)" fill-opacity="0.03" style="mix-blend-mode:plus-lighter"/>
+<rect width="830" height="340" transform="translate(20 42)" fill="url(#paint0_radial_4105_2311)"/>
+<defs>
+<pattern id="pattern0_4105_2311" patternContentUnits="objectBoundingBox" width="0.0212924" height="0.0519786">
+<use xlink:href="#image0_4105_2311" transform="scale(0.00177437 0.00433155)"/>
+</pattern>
+<radialGradient id="paint0_radial_4105_2311" cx="0" cy="0" r="1" gradientTransform="matrix(0.520686 -123.357 301.137 1.76577 415 170)" gradientUnits="userSpaceOnUse">
+<stop stop-color="#212121" stop-opacity="0"/>
+<stop offset="1" stop-color="#212121"/>
+</radialGradient>
+<image id="image0_4105_2311" width="12" height="12" preserveAspectRatio="none" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAALklEQVR4AeyRwQkAAAgCo/1HcNfiJih/PRJ8KnhmGJJUVoDuD0Bh8kVK3L01+xoAAP//8bTKOAAAAAZJREFUAwBKTCH9dNg80QAAAABJRU5ErkJggg=="/>
+</defs>
+</svg>

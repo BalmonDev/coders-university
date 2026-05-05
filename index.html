@@ -1,0 +1,4331 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Coders University</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Sora:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ===== Fluid responsive root =====
+       Baseline: 1440px design. 1rem == 1vw (so 1rem == 14.4px @ 1440px viewport).
+       All sizes below are expressed in rem so the whole UI scales with viewport width.
+       Para telas menores, basta ajustar o vw nos breakpoints abaixo. */
+    html { font-size: 0.92vw; scroll-behavior: smooth; scroll-padding-top: 5.5556rem; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+    body { font-size: 1rem; }
+    @media (max-width: 1024px) { html { font-size: 1.4vw; } }
+    @media (max-width: 900px)  { html { font-size: 1.6vw; } }
+    @media (max-width: 640px)  { html { font-size: 2.4vw; } }
+
+    :root {
+      --bg: #000000;
+      --text: #ffffff;
+      --green-1: #44d62c;
+      --green-2: #48f895;
+      --border-soft: rgba(255, 255, 255, 0.12);
+      --border-button: rgba(244, 244, 244, 0.11);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "NexaText", "Nexa Text", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ===== Announcement bar ===== */
+    .announce {
+      position: relative;
+      width: 100%;
+      padding: 0.8333rem 1.1111rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8333rem;
+      background: linear-gradient(83.66deg, #44d62c 0%, #48f895 118.65%);
+      border-bottom: 0.1389rem solid rgba(53, 156, 58, 0.28);
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+      overflow: hidden;
+      transition: background 0.3s ease;
+    }
+    .announce::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(83.66deg, #48f895 0%, #44d62c 118.65%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+    .announce:hover::before { opacity: 1; }
+    .announce-text,
+    .announce-icon { position: relative; z-index: 1; }
+    .announce-text { transition: opacity 0.2s ease; }
+    .announce-icon { transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1); }
+    .announce:hover .announce-text { opacity: 1; }
+    .announce:hover .announce-icon { transform: translateX(0.4167rem); }
+    .announce-text {
+      opacity: 0.77;
+      color: #000;
+      font-weight: 700;
+      font-size: 0.9722rem;
+      line-height: 0.9722rem;
+      letter-spacing: -0.0194rem;
+      white-space: nowrap;
+    }
+    .announce-icon {
+      width: 1.0417rem;
+      height: 0.9722rem;
+      color: #000;
+      opacity: 0.77;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .announce-icon svg { width: 100%; height: 100%; display: block; }
+
+    /* ===== Navbar ===== */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #000;
+      border-bottom: 0.0694rem solid var(--border-soft);
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.1111rem 5rem;
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 90rem;
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 2.9167rem;
+    }
+
+    /* Logo */
+    .nav-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.9622rem;
+      width: 11.0215rem;
+      text-decoration: none;
+      color: var(--text);
+    }
+    .nav-logo img {
+      height: 2.7778rem;
+      width: auto;
+      display: block;
+    }
+
+    /* Links */
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.8333rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .nav-links a {
+      position: relative;
+      display: inline-block;
+      padding: 0.625rem;
+      font-size: 1.0417rem;
+      line-height: 1.0417rem;
+      letter-spacing: -0.0111rem;
+      color: #fff;
+      opacity: 0.6;
+      text-decoration: none;
+      font-weight: 400;
+      transition: opacity 0.2s ease;
+    }
+    .nav-links a:hover { opacity: 0.9; }
+
+    .nav-links a.is-active {
+      opacity: 1;
+    }
+    .nav-links a.is-active::after {
+      content: "";
+      position: absolute;
+      left: -0.4861rem;
+      right: -0.4861rem;
+      bottom: -1.2847rem;
+      height: 0.2778rem;
+      background: var(--green-1);
+    }
+
+    /* Auth */
+    .auth-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5549rem;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.8333rem 1.6667rem;
+      font-size: 0.9722rem;
+      line-height: 0.9722rem;
+      letter-spacing: -0.0194rem;
+      border-radius: 0.5556rem;
+      text-decoration: none;
+      cursor: pointer;
+      border: 0.0694rem solid var(--border-button);
+      transition: transform 0.15s ease, filter 0.2s ease;
+    }
+    .btn-login {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.05);
+      font-weight: 400;
+      transition: background 0.2s ease;
+    }
+    .btn-login:hover { background: rgba(255, 255, 255, 0.1); }
+
+    .btn-signup {
+      position: relative;
+      color: #000;
+      font-weight: 700;
+      background: linear-gradient(108.8deg, #44d62c 15.394%, #48f895 92.508%);
+      overflow: hidden;
+      isolation: isolate;
+      transition: transform 0.15s ease, box-shadow 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .btn-signup::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(108.8deg, #48f895 15.394%, #44d62c 92.508%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      border-radius: inherit;
+      z-index: -1;
+    }
+    .btn-signup:hover {
+      transform: translateY(-0.0694rem);
+      box-shadow: 0 0.5556rem 1.6667rem rgba(68, 214, 44, 0.45);
+    }
+    .btn-signup:hover::before { opacity: 1; }
+
+    /* Mobile */
+    .nav-toggle {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 2.7778rem;
+      height: 2.7778rem;
+      background: transparent;
+      border: 0;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    @media (max-width: 1024px) {
+      .nav { padding: 1.1111rem 1.6667rem; }
+    }
+    @media (max-width: 900px) {
+      .nav-links,
+      .auth-actions { display: none; }
+      .nav-toggle { display: inline-flex; }
+      .nav { padding: 0.9722rem 1.1111rem; }
+      .announce-text { white-space: normal; text-align: center; font-size: 0.8333rem; line-height: 0.9722rem; }
+    }
+
+    /* Stage / hero */
+    .stage {
+      position: relative;
+      min-height: calc(100vh - 8.3333rem);
+      background: #000;
+      overflow: hidden;
+      isolation: isolate;
+    }
+    .bg-blinds {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: auto;
+      z-index: 0;
+    }
+    .stage-inner {
+      position: relative;
+      z-index: 2;
+      min-height: calc(100vh - 8.3333rem);
+      max-width: 100rem;
+      margin: 0 auto;
+      padding: 0 0 0 5rem;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+    }
+    .stage-inner > * { pointer-events: auto; }
+
+    /* ===== Hero content (Figma 2196:267) ===== */
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 3.4028rem;
+      width: 100%;
+      max-width: 38.8889rem;
+      padding: 5.5556rem 0;
+    }
+    .hero-content > * { pointer-events: auto; }
+
+    .hero-stack {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2.2222rem;
+      width: 100%;
+    }
+
+    /* Pill */
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 1.1111rem;
+      padding: 0.2778rem 0.2778rem 0.2778rem 0.8333rem;
+      background: linear-gradient(144.46deg, #44d62c 20.13%, #48f895 113.35%);
+      border-radius: 0;
+    }
+    .hero-pill-left {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8333rem;
+    }
+    .hero-pill-icon {
+      width: 1.25rem;
+      height: 1.25rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #000;
+    }
+    .hero-pill-icon svg { width: 100%; height: 100%; display: block; }
+    .hero-pill-text {
+      font-family: "NexaText", "Inter", sans-serif;
+      font-weight: 700;
+      font-size: 0.9722rem;
+      line-height: 1.2056rem;
+      letter-spacing: -0.0194rem;
+      color: #000;
+      opacity: 0.7;
+      white-space: nowrap;
+      text-transform: uppercase;
+    }
+    .hero-pill-tag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.2778rem 0.5556rem;
+      background: #000;
+      color: #fff;
+      font-family: "Sora", "Inter", sans-serif;
+      font-weight: 400;
+      font-size: 0.6944rem;
+      line-height: 0.6944rem;
+      white-space: nowrap;
+    }
+
+    /* Title + sub */
+    .hero-text {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2.4306rem;
+      text-align: left;
+      width: 100%;
+    }
+    .hero-title {
+      font-family: "NexaText", "Inter", sans-serif;
+      font-weight: 400;
+      font-size: clamp(2.5rem, 4.2vw, 3.6111rem);
+      line-height: 1.0;
+      letter-spacing: -0.2083rem;
+      color: #fff;
+      margin: 0;
+    }
+    .hero-title .grad {
+      background: linear-gradient(89.55deg, #44d62c 0%, #48f895 118.65%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
+    .hero-sub {
+      font-family: "Montserrat", "Inter", sans-serif;
+      font-weight: 400;
+      font-size: 1.1111rem;
+      line-height: 1.625rem;
+      letter-spacing: -0.0125rem;
+      color: rgba(255, 255, 255, 0.67);
+      max-width: 100%;
+      margin: 0;
+    }
+
+    /* CTAs */
+    .hero-ctas {
+      display: flex;
+      align-items: stretch;
+      gap: 0.8333rem;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+    }
+    .cta-primary {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.6667rem;
+      padding: 0.2778rem 0.2778rem 0.2778rem 1.6667rem;
+      background: linear-gradient(83.66deg, #44d62c 0%, #48f895 118.65%);
+      color: #000;
+      font-family: "Montserrat", "Inter", sans-serif;
+      font-weight: 600;
+      font-size: 1.1111rem;
+      line-height: 1.1111rem;
+      letter-spacing: 0.0111rem;
+      text-decoration: none;
+      transition: transform 0.15s ease;
+      height: 3.6111rem;
+      border: 0.0694rem solid var(--border-button);
+      border-radius: 0.5556rem;
+      overflow: hidden;
+    }
+    .cta-primary::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(83.66deg, #48f895 0%, #44d62c 118.65%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      border-radius: inherit;
+    }
+    .cta-primary > * { position: relative; z-index: 1; }
+    .cta-primary { transition: transform 0.15s ease, box-shadow 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
+    .cta-primary:hover {
+      transform: translateY(-0.0694rem);
+      box-shadow: 0 0.6944rem 1.9444rem rgba(68, 214, 44, 0.45);
+    }
+    .cta-primary:hover::before { opacity: 1; }
+    .cta-arrow {
+      width: 3.0556rem;
+      height: 3.0556rem;
+      background: rgba(255, 255, 255, 0.2);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #000;
+      flex-shrink: 0;
+      border-radius: 0.4167rem;
+    }
+    .cta-arrow svg { width: 1.5278rem; height: 1.5278rem; display: block; }
+
+    .cta-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.2778rem 1.6667rem;
+      height: 3.6111rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 0.0694rem solid rgba(255, 255, 255, 0.1);
+      color: #fff;
+      font-family: "Montserrat", "Inter", sans-serif;
+      font-weight: 600;
+      font-size: 1.1111rem;
+      line-height: 1.1111rem;
+      letter-spacing: 0.0111rem;
+      text-decoration: none;
+      transition: background 0.2s ease;
+      border-radius: 0.5556rem;
+    }
+    .cta-secondary:hover { background: rgba(255, 255, 255, 0.1); }
+
+    /* Hero photo (overlay no canto direito) */
+    .hero-photo {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 65%;
+      max-width: 67.2222rem;
+      z-index: 1;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .hero-photo img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+    }
+    .hero-photo::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(270deg, rgba(0,0,0,0) 68%, #000 90%),
+        linear-gradient(90deg, rgba(0,0,0,0) 88%, #000 100%),
+        linear-gradient(180deg, rgba(0,0,0,0) 60%, #000 100%);
+    }
+    .hero-tag {
+      position: absolute;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6944rem;
+    }
+    .hero-tag .name {
+      font-family: "NexaText", "Inter", sans-serif;
+      font-weight: 700;
+      font-size: 1.8056rem;
+      line-height: 1.1;
+      letter-spacing: -0.0535rem;
+      color: #fff;
+    }
+    .hero-tag .role {
+      font-family: "NexaText", "Inter", sans-serif;
+      font-weight: 400;
+      font-size: 1.0417rem;
+      line-height: 1.1;
+      letter-spacing: -0.0312rem;
+      color: #44d62c;
+      text-transform: uppercase;
+    }
+    .hero-tag-levir {
+      left: 22%;
+      bottom: 11%;
+      max-width: 16.6667rem;
+    }
+    .hero-tag-castig {
+      left: 67%;
+      bottom: 18%;
+    }
+
+    @media (max-width: 1024px) {
+      .stage-inner {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0 1.6667rem;
+        min-height: auto;
+      }
+      .hero-content { padding: 4.1667rem 0 0; max-width: 100%; }
+      .hero-photo {
+        position: relative;
+        width: auto;
+        max-width: none;
+        height: 29.1667rem;
+        margin: 2.2222rem -1.6667rem 0;
+      }
+      .hero-photo::after {
+        background: linear-gradient(180deg, rgba(0,0,0,0) 55%, #000 100%);
+      }
+      .hero-tag-levir { left: 18%; bottom: 10%; }
+      .hero-tag-castig { left: 55%; bottom: 18%; }
+    }
+    @media (max-width: 640px) {
+      .hero-content { gap: 2.5rem; }
+      .hero-stack { gap: 1.6667rem; }
+      .hero-text { gap: 1.6667rem; }
+      .hero-pill { flex-direction: column; gap: 0.5556rem; padding: 0.5556rem; align-items: flex-start; }
+      .hero-pill-text { font-size: 0.8333rem; }
+      .hero-title { letter-spacing: -0.1042rem; }
+      .hero-tag .name { font-size: 1.3889rem; }
+      .hero-tag .role { font-size: 0.8333rem; }
+    }
+
+    /* ===== Folder tab decoration (no canto bottom-right da hero) ===== */
+    .hero-folder {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 25.0694rem;
+      height: 4.6528rem;
+      pointer-events: none;
+      z-index: 4;
+      display: block;
+    }
+
+    /* ===== Stats Bar (retângulo verde sólido) ===== */
+    .stats-bar {
+      background: #E3FEDF;
+      padding: 2.6389rem 4.1667rem;
+    }
+    .stats-inner {
+      max-width: 89.7917rem;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.6667rem;
+    }
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6944rem;
+      color: #000;
+      flex: 1;
+      min-width: 0;
+    }
+    .stat-num {
+      font-family: "NexaText", "Inter", sans-serif;
+      font-weight: 700;
+      font-size: 2.7778rem;
+      line-height: 1.1;
+      letter-spacing: -0.2083rem;
+      color: #000;
+      white-space: nowrap;
+    }
+    .stat-label {
+      font-family: "NexaText", "Inter", sans-serif;
+      font-weight: 400;
+      font-size: 0.9722rem;
+      line-height: 1.1;
+      letter-spacing: -0.0292rem;
+      color: rgba(0, 0, 0, 0.7);
+      text-transform: uppercase;
+    }
+    .stat-divider {
+      width: 0.0694rem;
+      height: 5.5556rem;
+      background: rgba(0, 0, 0, 0.2);
+      flex-shrink: 0;
+    }
+    @media (max-width: 900px) {
+      .stats-bar { padding: 2.2222rem 1.6667rem; }
+      .stats-inner { flex-wrap: wrap; gap: 1.9444rem; justify-content: flex-start; }
+      .stat-item { flex: 1 1 calc(50% - 0.9722rem); min-width: 11.1111rem; }
+      .stat-divider { display: none; }
+      .stat-num { font-size: 2.2222rem; letter-spacing: -0.1389rem; }
+    }
+
+    /* ===== ESIC Section (Figma 2187:146) ===== */
+    .esic-section {
+      position: relative;
+      background: #fff;
+      color: #000;
+      padding: 6.3889rem 5rem;
+      overflow: hidden;
+      min-height: 50rem;
+    }
+    .esic-inner {
+      position: relative;
+      z-index: 3;
+      max-width: 90rem;
+      margin: 0 auto;
+    }
+    .esic-text {
+      display: flex;
+      flex-direction: column;
+      gap: 3.8889rem;
+      max-width: 33.4028rem;
+    }
+    .esic-text-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 2.4306rem;
+    }
+    .esic-title-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8333rem;
+    }
+    .esic-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      align-self: flex-start;
+      padding: 0 0.8333rem;
+      background: #44d62c;
+      font-family: "Montserrat", "Inter", sans-serif;
+      font-weight: 600;
+      font-size: 0.9722rem;
+      line-height: 1.6;
+      letter-spacing: -0.0125rem;
+      color: #000;
+      text-transform: uppercase;
+      white-space: nowrap;
+      margin: 0;
+    }
+    .esic-title {
+      font-family: "NexaText", "Inter", sans-serif;
+      font-weight: 400;
+      font-size: clamp(2.2222rem, 3.5vw, 2.7778rem);
+      line-height: 1.1;
+      letter-spacing: -0.2083rem;
+      color: #000;
+      margin: 0;
+    }
+    .esic-title .grad {
+      background: linear-gradient(89.33deg, #44d62c 0%, #48f895 118.65%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
+    .esic-desc {
+      font-family: "Montserrat", "Inter", sans-serif;
+      font-weight: 400;
+      font-size: 1.1111rem;
+      line-height: 1.625rem;
+      letter-spacing: -0.0125rem;
+      color: rgba(0, 0, 0, 0.67);
+      margin: 0;
+    }
+    .esic-cta {
+      align-self: flex-start;
+    }
+    .esic-cta .cta-arrow { background: rgba(255, 255, 255, 0.2); }
+
+    .esic-map {
+      position: absolute;
+      top: 8%;
+      left: 44%;
+      right: -8%;
+      opacity: 0.95;
+      z-index: 1;
+    }
+    /* padding-top hack: garante ratio 109/80 == 73.394% no wrapper, independente de browser */
+    .esic-map::before {
+      content: '';
+      display: block;
+      padding-top: 73.394%;
+    }
+    .esic-map-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: fill;
+      pointer-events: none;
+      display: block;
+    }
+    .esic-card-wrap {
+      position: absolute;
+      /* Centro do mapa: x = (left:44% + right:108%)/2 = 76%; y ≈ 50% */
+      left: 76%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 5;
+    }
+    .esic-card {
+      background: #fff;
+      border: 0.0694rem solid rgba(0, 0, 0, 0.1);
+      padding: 1.5972rem 1.8056rem;
+      filter: drop-shadow(0 0 3.4722rem rgba(131, 180, 123, 0.4));
+    }
+    .esic-logo {
+      position: relative;
+      display: block;
+      width: 12.9167rem;
+      aspect-ratio: 1600 / 688;
+    }
+    .esic-logo-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .esic-logo-mask {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      /* só o topo do mask (shield + ESIC) — exclui faixa transparente + flags do mask */
+      height: 60%;
+      background: #000;
+      mask-image: url('assets/esic-mask.png');
+      mask-size: 100% auto;
+      mask-position: 0 0;
+      mask-repeat: no-repeat;
+      -webkit-mask-image: url('assets/esic-mask.png');
+      -webkit-mask-size: 100% auto;
+      -webkit-mask-position: 0 0;
+      -webkit-mask-repeat: no-repeat;
+    }
+    /* ===== Entry animations ===== */
+    .anim {
+      opacity: 0;
+      transform: translateY(1.6667rem);
+      transition: opacity .75s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform .75s cubic-bezier(0.22, 1, 0.36, 1);
+      transition-delay: var(--anim-delay, 0ms);
+      will-change: opacity, transform;
+    }
+    .anim.anim-right { transform: translateX(2.7778rem); }
+    .anim.anim-left { transform: translateX(-2.7778rem); }
+    .anim.anim-scale { transform: scale(0.92); }
+    .anim.anim-fade { transform: none; }
+    .anim.is-in {
+      opacity: 1;
+      transform: none;
+    }
+    @media (prefers-reduced-motion: reduce), print {
+      .anim {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .esic-section { padding: 5rem 2.2222rem; min-height: auto; }
+      .esic-text { max-width: 100%; margin-bottom: 22.2222rem; }
+      .esic-map {
+        top: auto;
+        bottom: 0;
+        left: 0;
+        right: -10%;
+        width: 110%;
+      }
+      .esic-card-wrap { left: 50%; top: auto; bottom: 5.5556rem; transform: translateX(-50%); }
+    }
+
+    /* ===== Generic section primitives ===== */
+    .section {
+      padding: 6.9444rem 5rem;
+      position: relative;
+    }
+    .section-dark { background: #050505; color: #fff; }
+    .section-darker { background: #020202; color: #fff; }
+    .section-inner {
+      max-width: 90rem;
+      margin: 0 auto;
+      position: relative;
+    }
+    .eyebrow {
+      font-family: "Montserrat", "Inter", sans-serif;
+      font-weight: 500;
+      font-size: 0.9722rem;
+      line-height: 1.2;
+      letter-spacing: 0.1em;
+      color: #44d62c;
+      text-transform: uppercase;
+      margin: 0 0 1.3889rem;
+    }
+    .section-title {
+      font-family: "NexaText", "Inter", sans-serif;
+      font-weight: 400;
+      font-size: clamp(2.2222rem, 3.6vw, 3.3333rem);
+      line-height: 1.05;
+      letter-spacing: -0.1736rem;
+      color: #fff;
+      margin: 0 0 1.6667rem;
+      max-width: 61.1111rem;
+    }
+    .section-title .grad {
+      background: linear-gradient(89.55deg, #44d62c 0%, #48f895 118.65%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
+    .section-sub {
+      font-family: "Montserrat", "Inter", sans-serif;
+      font-size: 1.1111rem;
+      line-height: 1.625rem;
+      letter-spacing: -0.0125rem;
+      color: rgba(255, 255, 255, 0.67);
+      max-width: 50rem;
+      margin: 0 0 3.8889rem;
+    }
+    .section-sub strong { color: #fff; font-weight: 600; }
+
+    /* Card base — usado pela maioria das seções */
+    .card-base {
+      background: rgba(255, 255, 255, 0.03);
+      border: 0.0694rem solid rgba(255, 255, 255, 0.08);
+      border-radius: 0.8333rem;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+    .card-base:hover {
+      border-color: rgba(68, 214, 44, 0.25);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    @media (max-width: 1024px) {
+      .section { padding: 5rem 2.2222rem; }
+    }
+    @media (max-width: 640px) {
+      .section { padding: 4.1667rem 1.6667rem; }
+    }
+
+    /* =================================================
+       SHARED PREMIUM PRIMITIVES (used across new sections)
+       ================================================= */
+
+    /* Decorative orb — radial-gradient shape pra fundo de cards */
+    .deco-orb {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .deco-orb-green {
+      background: radial-gradient(circle, rgba(68,214,44,0.16), transparent 65%);
+    }
+    .deco-orb-red {
+      background: radial-gradient(circle, rgba(255,107,107,0.18), transparent 65%);
+    }
+    .deco-orb-mint {
+      background: radial-gradient(circle, rgba(72,248,149,0.12), transparent 65%);
+    }
+
+    /* Gradient border técnica padding-box */
+    .gradient-border {
+      position: relative;
+      padding: 0.0694rem;
+      border-radius: 0.9722rem;
+      background: linear-gradient(
+        135deg,
+        rgba(68,214,44,0.5) 0%,
+        rgba(68,214,44,0.05) 35%,
+        rgba(72,248,149,0.05) 65%,
+        rgba(72,248,149,0.4) 100%
+      );
+      isolation: isolate;
+    }
+    .gradient-border-strong {
+      background: linear-gradient(
+        135deg,
+        #44d62c 0%,
+        rgba(68,214,44,0.15) 35%,
+        rgba(72,248,149,0.15) 65%,
+        #48f895 100%
+      );
+    }
+    .gradient-border > .gb-inner {
+      background: #050505;
+      border-radius: 0.9028rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Vertical gradient line decorativa */
+    .v-line {
+      width: 0.0694rem;
+      align-self: stretch;
+      background: linear-gradient(180deg, rgba(68,214,44,0.5) 0%, transparent 80%);
+      flex-shrink: 0;
+    }
+
+    /* Dot grid pattern background */
+    .dot-grid-bg {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(255,255,255,0.06) 0.0694rem, transparent 0.0694rem);
+      background-size: 1.9444rem 1.9444rem;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Watermark gigante (números atrás do conteúdo) */
+    .watermark {
+      position: absolute;
+      font-family: "NexaText", "Inter", sans-serif;
+      font-weight: 700;
+      font-size: 13.8889rem;
+      letter-spacing: -0.6944rem;
+      line-height: 0.85;
+      color: rgba(255,255,255,0.035);
+      pointer-events: none;
+      user-select: none;
+      z-index: 0;
+    }
+
+    /* Chip badge (premium pill) */
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4167rem;
+      padding: 0.4167rem 0.8333rem;
+      font-family: "Sora", "Inter", sans-serif;
+      font-weight: 500;
+      font-size: 0.7639rem;
+      line-height: 1;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border-radius: 69.375rem;
+      background: rgba(255,255,255,0.05);
+      border: 0.0694rem solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.7);
+      white-space: nowrap;
+    }
+    .chip-green {
+      background: rgba(68,214,44,0.1);
+      border-color: rgba(68,214,44,0.3);
+      color: #6ce85a;
+    }
+    .chip-green::before {
+      content: "";
+      width: 0.4167rem;
+      height: 0.4167rem;
+      border-radius: 50%;
+      background: #44d62c;
+      box-shadow: 0 0 0.5556rem #44d62c;
+    }
+
+    /* Mono code-style text */
+    .mono {
+      font-family: "Sora", "Inter", sans-serif;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+    }
+
+    /* Banner SVG decorativo acima da seção FACULTY */
+    .faculty-head-banner {
+      display: block;
+      width: 100%;
+      height: auto;
+      background: #000;
+      margin: 0;
+      pointer-events: none;
+    }
+
+    /* Banner SVG decorativo acima da seção MARKET (transição dark → white) */
+    .market-head-banner {
+      display: block;
+      width: 25.0694rem;
+      height: 4.6528rem;
+      background: #050505;
+      margin: 0;
+      pointer-events: none;
+    }
+
+    /* Divisor SVG entre MARKET e FAQ */
+    .market-faq-divider {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 0;
+      pointer-events: none;
+    }
+
+    /* =================================================
+       SECTION 1 — PAIN (Figma 2210:3413)
+       Light theme, centered header, 3 cards with red gradient fade
+       ================================================= */
+    .pain {
+      position: relative;
+      background: #fafaf7;
+      color: #000;
+      padding: 8.3333rem 5rem;
+      overflow: hidden;
+    }
+    .pain-header {
+      max-width: 52.9861rem;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2.2222rem;
+      text-align: center;
+    }
+    .pain-header-stack {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.6667rem;
+      width: 100%;
+    }
+    .pain-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      align-self: center;
+      padding: 0 0.8333rem;
+      background: #44d62c;
+      font-family: "Montserrat", "Inter", sans-serif;
+      font-weight: 600;
+      font-size: 0.9722rem;
+      line-height: 1.6;
+      letter-spacing: -0.0125rem;
+      color: #000;
+      text-transform: uppercase;
+      white-space: nowrap;
+      margin: 0;
+    }
+    .pain-title {
+      font-family: "NexaText", "Inter", sans-serif;
+      font-weight: 400;
+      font-size: clamp(2.2222rem, 4vw, 3.3333rem);
+      line-height: 1.0;
+      letter-spacing: -0.2083rem;
+      color: #000;
+      text-align: center;
+      margin: 0;
+    }
+    .pain-title .grad {
+      background: linear-gradient(88.67deg, #44d62c 0%, #48f895 118.65%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
+    .pain-sub {
+      font-family: "Montserrat", "Inter", sans-serif;
+      font-weight: 400;
+      font-size: 1.1111rem;
+      line-height: 1.625rem;
+      letter-spacing: -0.0125rem;
+      color: rgba(0, 0, 0, 0.67);
+      text-align: center;
+      max-width: 33.125rem;
+      margin: 0;
+    }
+    /* Pain cards — vertical red gradient fade + bottom border */
+    .pain-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.6667rem;
+      margin: 4.4444rem 0 0;
+    }
+    .pain-card {
+      display: flex;
+      flex-direction: column;
+      gap: 3.8889rem;
+      padding: 2.2222rem;
+      background: linear-gradient(180deg, rgba(255,82,82,0) 0%, rgba(255,82,82,0.1) 99.93%);
+      border-bottom: 0.2778rem solid #ff5252;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+    .pain-card:hover {
+      background: linear-gradient(180deg, rgba(255,82,82,0.02) 0%, rgba(255,82,82,0.16) 99.93%);
+      transform: translateY(-0.2778rem);
+    }
+    .pain-card-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1.1111rem;
+    }
+    .pain-card-tag {
+      font-family: "NexaText", "Inter", sans-serif;
+      font-weight: 700;
+      font-size: 0.9722rem;
+      line-height: 1.7083rem;
+      letter-spacing: -0.0194rem;
+      color: #ff5252;
+      text-transform: uppercase;
+    }
+    .pain-card-close {
+      width: 2.7778rem;
+      height: 2.7778rem;
+      flex-shrink: 0;
+      color: #ff5252;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .pain-card-close svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .pain-card-body {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6944rem;
+    }
+    .pain-card h3 {
+      font-family: "NexaText", "Inter", sans-serif;
+      font-weight: 700;
+      font-size: 1.6667rem;
+      line-height: 1.2;
+      letter-spacing: -0.0194rem;
+      color: #343434;
+      margin: 0;
+    }
+    .pain-card p {
+      font-family: "Sora", "Inter", sans-serif;
+      font-weight: 400;
+      font-size: 0.9722rem;
+      line-height: 1.1958rem;
+      letter-spacing: -0.0194rem;
+      color: #7f7f7f;
+      margin: 0;
+    }
+    @media (max-width: 900px) {
+      .pain-cards { grid-template-columns: 1fr; gap: 1.1111rem; margin-top: 3.3333rem; }
+      .pain-card { gap: 2.5rem; padding: 1.6667rem; }
+    }
+
+    /* Faculty — Photo cards style (Figma 2210:42035) */
+    .faculty-photos {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.0833rem;
+      margin: 3.8889rem 0 0;
+      max-width: 76.3889rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .faculty-photo-card {
+      position: relative;
+      overflow: hidden;
+      background: #000;
+      padding-bottom: 7.2222rem;
+    }
+    .faculty-photo-img {
+      position: relative;
+      aspect-ratio: 521 / 530;
+      overflow: hidden;
+      background: #000;
+    }
+    .faculty-photo-block {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.6);
+      -webkit-backdrop-filter: blur(1.6667rem);
+      backdrop-filter: blur(1.6667rem);
+      z-index: 2;
+    }
+    .faculty-photo-img img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .faculty-photo-img.left img { object-position: 30% center; }
+    .faculty-photo-img.right img { object-position: 78% center; }
+    .faculty-photo-plate {
+      display: flex;
+      align-items: center;
+      gap: 2.2917rem;
+      height: 7.2222rem;
+      padding: 0 1.6667rem 0 0;
+    }
+    .faculty-photo-shield {
+      width: 7.2917rem;
+      height: 7.2222rem;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, #44d62c, #48f895);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 1.6667rem rgba(68, 214, 44, 0.35);
+    }
+    .faculty-photo-shield svg,
+    .faculty-photo-shield img {
+      width: 60%;
+      height: 60%;
+      display: block;
+      object-fit: contain;
+    }
+    .faculty-photo-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4167rem;
+      min-width: 0;
+    }
+    .faculty-photo-name {
+      font-family: "NexaText", "Inter", sans-serif;
+      font-weight: 700;
+      font-size: 1.5278rem;
+      line-height: 1.1;
+      letter-spacing: -0.0486rem;
+      color: #fff;
+      margin: 0;
+    }
+    .faculty-photo-role {
+      font-family: "NexaText", "Inter", sans-serif;
+      font-weight: 400;
+      font-size: 0.8333rem;
+      line-height: 1.1;
+      letter-spacing: -0.0278rem;
+      color: #44d62c;
+      text-transform: uppercase;
+      margin: 0;
+    }
+    .faculty-photo-bio {
+      height: 0;
+      overflow: hidden;
+      border-top: 0.0694rem solid rgba(255, 255, 255, 0.1);
+    }
+    .faculty-photo-bio-content {
+      display: flex;
+      flex-direction: column;
+      gap: 1.1806rem;
+      padding: 1.3889rem 2.2222rem 2.2222rem;
+    }
+    .faculty-photo-bio-text {
+      font-family: "NexaText", "Inter", sans-serif;
+      font-weight: 400;
+      font-size: 1.25rem;
+      line-height: 1.4;
+      letter-spacing: -0.0375rem;
+      color: #fff;
+      margin: 0;
+    }
+    .faculty-photo-tag {
+      align-self: flex-start;
+      border: 0.0694rem solid #44d62c;
+      padding: 0.1389rem 0.8333rem;
+      font-family: "Montserrat", "Inter", sans-serif;
+      font-weight: 600;
+      font-size: 0.9722rem;
+      line-height: 1.6;
+      letter-spacing: -0.0125rem;
+      text-transform: uppercase;
+      color: #fff;
+    }
+    @media (max-width: 900px) {
+      .faculty-photos { grid-template-columns: 1fr; gap: 1.3889rem; margin-top: 3.3333rem; }
+      .faculty-photo-card { padding-bottom: 6.1111rem; }
+      .faculty-photo-plate { height: 6.1111rem; gap: 1.1111rem; padding: 0 1.25rem; }
+      .faculty-photo-shield { width: 3.8889rem; height: 3.8889rem; }
+      .faculty-photo-name { font-size: 1.25rem; }
+      .faculty-photo-bio-content { padding: 1.1111rem 1.3889rem 1.6667rem; }
+      .faculty-photo-bio-text { font-size: 1rem; }
+    }
+
+    /* Problem quote — dark section after pain (Figma 2210:34315) */
+    .problem-tab-bridge {
+      background: #fafaf7;
+      display: flex;
+      justify-content: flex-end;
+      line-height: 0;
+    }
+    .problem-tab {
+      width: 25.0694rem;
+      height: 4.6528rem;
+      display: block;
+    }
+    .problem-quote {
+      position: relative;
+      background: #000;
+      color: #fff;
+      padding: 4.4444rem 5rem 5.5556rem;
+      overflow: hidden;
+    }
+    .problem-quote-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 90rem;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 13.8889rem 1fr;
+      gap: 3.8889rem;
+      align-items: start;
+      padding-top: 2.2222rem;
+    }
+    .problem-quote .pain-eyebrow {
+      align-self: flex-start;
+      justify-self: start;
+      width: max-content;
+      margin-top: 0.5556rem;
+    }
+    .problem-quote-text {
+      font-family: "NexaText", "Inter", sans-serif;
+      font-weight: 400;
+      font-size: clamp(1.9444rem, 2.6vw, 2.6389rem);
+      line-height: 1.25;
+      letter-spacing: -0.0833rem;
+      color: #fff;
+      margin: 0;
+      max-width: 68.0556rem;
+    }
+    .problem-quote-text .grad {
+      background: linear-gradient(89.55deg, #44d62c 0%, #48f895 118.65%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
+    .problem-quote-halftone {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -8.3333rem;
+      height: 25rem;
+      pointer-events: none;
+      z-index: 0;
+      background-image:
+        radial-gradient(circle, rgba(68, 214, 44, 0.7) 0.0972rem, transparent 0.1111rem);
+      background-size: 0.9722rem 0.9722rem;
+      mask-image:
+        radial-gradient(ellipse 80% 90% at 50% 110%, #000 0%, rgba(0,0,0,0.4) 30%, transparent 70%);
+      -webkit-mask-image:
+        radial-gradient(ellipse 80% 90% at 50% 110%, #000 0%, rgba(0,0,0,0.4) 30%, transparent 70%);
+      opacity: 0.85;
+    }
+    @media (max-width: 900px) {
+      .problem-quote { padding: 5rem 1.6667rem 3.8889rem; }
+      .problem-quote-tab { width: 16.6667rem; height: 3.0556rem; }
+      .problem-quote-inner {
+        grid-template-columns: 1fr;
+        gap: 1.6667rem;
+        padding-top: 1.6667rem;
+      }
+    }
+    .pain-cta-row {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      margin-top: 0.5556rem;
+    }
+    @media (max-width: 900px) {
+      .pain { padding: 5.5556rem 1.6667rem; }
+      .pain-grid { grid-template-columns: 1fr; gap: 0.9722rem; }
+      .pain-card { padding: 1.9444rem 1.6667rem 5.5556rem; min-height: 16.6667rem; }
+      .pain-quote { padding: 1.6667rem 1.9444rem; }
+      .pain-quote p { font-size: 1.1111rem; }
+    }
+
+    /* =================================================
+       SECTION 2 — FACULTY (light theme, photo cards)
+       ================================================= */
+    .faculty {
+      position: relative;
+      background: #E3FEDF;
+      color: #000;
+      padding: 8.3333rem 5rem;
+      overflow: hidden;
+    }
+    .faculty .pain-eyebrow {
+      background: #44d62c;
+      color: #000;
+    }
+    .faculty .pain-title { color: #000; }
+    .faculty .pain-sub { color: rgba(0, 0, 0, 0.67); }
+    .faculty-list {
+      position: relative;
+      z-index: 1;
+      margin-top: 3.8889rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.9444rem;
+    }
+    .faculty-card {
+      position: relative;
+      border-radius: 1.1111rem;
+      overflow: hidden;
+    }
+    .faculty-card .gb-inner {
+      display: grid;
+      grid-template-columns: 22.2222rem 0.0694rem 1fr;
+      gap: 0;
+      padding: 0;
+      overflow: hidden;
+      border-radius: 1.0417rem;
+    }
+    .faculty-card.reverse .gb-inner {
+      grid-template-columns: 1fr 0.0694rem 22.2222rem;
+    }
+    .faculty-photo {
+      position: relative;
+      min-height: 22.2222rem;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 35% 30%, rgba(68,214,44,0.22), transparent 65%),
+        radial-gradient(circle at 70% 70%, rgba(72,248,149,0.1), transparent 60%),
+        #060906;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .faculty-photo::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.04) 0.0694rem, transparent 0.0694rem),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 0.0694rem, transparent 0.0694rem);
+      background-size: 1.5278rem 1.5278rem;
+      pointer-events: none;
+    }
+    .faculty-initials {
+      position: relative;
+      z-index: 1;
+      font-family: "NexaText", "Inter", sans-serif;
+      font-weight: 700;
+      font-size: clamp(5rem, 9vw, 8.3333rem);
+      letter-spacing: -0.3472rem;
+      line-height: 1;
+      background: linear-gradient(135deg, #44d62c, #48f895);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      filter: drop-shadow(0 0 2.0833rem rgba(68,214,44,0.4));
+    }
+    .faculty-photo-badge {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      z-index: 2;
+      filter: drop-shadow(0 0 1.3889rem rgba(68,214,44,0.5));
+    }
+    .faculty-photo-badge.left {
+      right: auto;
+      left: 1.25rem;
+    }
+    .faculty-divider {
+      background: linear-gradient(180deg, transparent 5%, rgba(68,214,44,0.4) 50%, transparent 95%);
+    }
+    .faculty-body {
+      padding: 3.0556rem 2.7778rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.9722rem;
+    }
+    .faculty-meta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6944rem;
+      font-family: "Sora", "Inter", sans-serif;
+      font-size: 0.7639rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      color: #44d62c;
+      text-transform: uppercase;
+    }
+    .faculty-meta::before {
+      content: "";
+      width: 1.6667rem;
+      height: 0.0694rem;
+      background: #44d62c;
+    }
+    .faculty-name {
+      font-family: "NexaText", "Inter", sans-serif;
+      font-weight: 700;
+      font-size: 2.2222rem;
+      line-height: 1.05;
+      letter-spacing: -0.1042rem;
+      color: #fff;
+      margin: 0;
+    }
+    .faculty-bio {
+      font-family: "Montserrat", "Inter", sans-serif;
+      font-size: 1.0069rem;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.65);
+      margin: 0;
+      max-width: 36.1111rem;
+    }
+    .faculty-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5556rem;
+      margin-top: 0.8333rem;
+    }
+    @media (max-width: 1024px) {
+      .faculty { padding: 5.5556rem 2.2222rem; }
+      .faculty-card .gb-inner,
+      .faculty-card.reverse .gb-inner {
+        grid-template-columns: 1fr;
+      }
+      .faculty-divider { display: none; }
+      .faculty-photo { min-height: 15.2778rem; }
+      .faculty-body { padding: 2.2222rem 1.9444rem; }
+      .faculty-name { font-size: 1.8056rem; }
+    }
+
+    /* =================================================
+       SECTION 3 — PROFILE (yes/no)
+       Light pistachio bg + dark glass cards, matching faculty visual language
+       ================================================= */
+    .profile {
+      position: relative;
+      background: #ffffff;
+      color: #050505;
+      padding: 8.3333rem 5rem;
+      overflow: hidden;
+    }
+    .profile::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 45% 30% at 0% 0%, rgba(68,214,44,0.10), transparent 70%),
+        radial-gradient(ellipse 45% 30% at 100% 100%, rgba(72,248,149,0.06), transparent 70%);
+      pointer-events: none;
+    }
+    .profile .section-inner { position: relative; z-index: 1; }
+    .profile .section-title { color: #050505; }
+    .profile .section-title .grad {
+      background: linear-gradient(89.33deg, #2bb31a 0%, #1ec977 118.65%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
+    .profile-header {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 2.7778rem;
+      align-items: end;
+      margin-bottom: 4.4444rem;
+    }
+    .profile-header > div { display: flex; flex-direction: column; align-items: flex-start; gap: 1.9444rem; }
+    .profile-header .pain-eyebrow { align-self: flex-start; }
+    .profile-header .section-title { margin: 0; max-width: 14ch; text-align: left; }
+    .profile-header-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 1.1111rem;
+      justify-self: end;
+      max-width: 26.3889rem;
+    }
+    .profile-header-desc {
+      font-family: "Montserrat", "Inter", sans-serif;
+      font-size: 1.0417rem;
+      line-height: 1.6;
+      letter-spacing: -0.0125rem;
+      color: rgba(0, 0, 0, 0.65);
+      margin: 0;
+    }
+    .profile-stat {
+      display: flex;
+      align-items: baseline;
+      gap: 0.6944rem;
+      font-family: "Sora", "Inter", sans-serif;
+      font-size: 0.7639rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.45);
+    }
+    .profile-stat strong {
+      color: #2bb31a;
+      font-weight: 600;
+    }
+    .profile-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border-top: 0.0694rem solid rgba(0,0,0,0.12);
+    }
+    .profile-col {
+      position: relative;
+      padding: 2.7778rem 2.2222rem;
+    }
+    .profile-col + .profile-col {
+      border-left: 0.0694rem solid rgba(0,0,0,0.08);
+    }
+    .profile-col--fit::before,
+    .profile-col--skip::before {
+      content: "";
+      position: absolute;
+      top: -0.0694rem;
+      left: 0;
+      width: 4.1667rem;
+      height: 0.2083rem;
+    }
+    .profile-col--fit::before {
+      background: linear-gradient(90deg, #44d62c, #48f895);
+      box-shadow: 0 0 1.3889rem rgba(68,214,44,0.4);
+    }
+    .profile-col--skip::before {
+      background: linear-gradient(90deg, #e63946, #ff6b6b);
+      box-shadow: 0 0 1.3889rem rgba(230,57,70,0.4);
+    }
+    .profile-col-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5556rem;
+      font-family: "Sora", "Inter", sans-serif;
+      font-weight: 600;
+      font-size: 0.7639rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: 0.6944rem;
+    }
+    .profile-col--fit .profile-col-tag { color: #2bb31a; }
+    .profile-col--skip .profile-col-tag { color: #e63946; }
+    .profile-col-tag .glyph {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.0417rem;
+      height: 1.0417rem;
+      font-size: 0.9722rem;
+      line-height: 1;
+    }
+    .profile-col--fit .profile-col-tag .glyph { color: #2bb31a; }
+    .profile-col--skip .profile-col-tag .glyph { color: #e63946; }
+    .profile-col-title {
+      font-family: "NexaText", "Inter", sans-serif;
+      font-weight: 600;
+      font-size: 1.6667rem;
+      line-height: 1.1;
+      letter-spacing: -0.0556rem;
+      margin: 0 0 2.2222rem;
+      max-width: 22ch;
+    }
+    .profile-col--fit .profile-col-title { color: #050505; }
+    .profile-col--skip .profile-col-title { color: #050505; }
+    .profile-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .profile-list li {
+      display: grid;
+      grid-template-columns: 1.6667rem 1fr;
+      gap: 0.9722rem;
+      align-items: center;
+      padding: 1.1111rem 0;
+      border-top: 0.0694rem solid rgba(0,0,0,0.08);
+      font-family: "Montserrat", "Inter", sans-serif;
+      font-weight: 500;
+      font-size: 1.0069rem;
+      line-height: 1.55;
+      letter-spacing: -0.0125rem;
+    }
+    .profile-list li:first-child { border-top: 0; }
+    .profile-mark {
+      width: 1.3889rem;
+      height: 1.3889rem;
+      display: block;
+      flex-shrink: 0;
+    }
+    .profile-col--fit .profile-mark { color: #2bb31a; }
+    .profile-col--skip .profile-mark { color: #e63946; }
+    .profile-col--fit .profile-list li { color: rgba(0,0,0,0.85); }
+    .profile-col--skip .profile-list li { color: rgba(0,0,0,0.85); }
+    .profile-cta-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.6667rem;
+      flex-wrap: wrap;
+      margin-top: 4.4444rem;
+      padding-top: 3.3333rem;
+      border-top: 0.0694rem solid rgba(0,0,0,0.1);
+    }
+    .profile-cta-note {
+      font-family: "Sora", "Inter", sans-serif;
+      font-size: 0.7639rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.45);
+    }
+    .profile-cta-note .dot {
+      display: inline-block;
+      width: 0.4167rem;
+      height: 0.4167rem;
+      background: #44d62c;
+      border-radius: 50%;
+      box-shadow: 0 0 0.6944rem rgba(68,214,44,0.6);
+      margin-right: 0.5556rem;
+      vertical-align: middle;
+    }
+    @media (max-width: 1024px) {
+      .profile { padding: 5.5556rem 2.2222rem; }
+      .profile-header { grid-template-columns: 1fr; gap: 1.6667rem; align-items: start; }
+      .profile-header-meta { justify-self: start; }
+    }
+    @media (max-width: 768px) {
+      .profile-cols { grid-template-columns: 1fr; }
+      .profile-col + .profile-col {
+        border-left: 0;
+        border-top: 0.0694rem solid rgba(255,255,255,0.08);
+      }
+      .profile-col { padding: 2.2222rem 0; }
+    }
+    @media (max-width: 640px) {
+      .profile { padding: 4.4444rem 1.6667rem; }
+      .profile-list li { grid-template-columns: 2.2222rem 1fr; }
+    }
+
+    /* =================================================
+       SECTION 4 — CURRICULUM (TIMELINE)
+       Phases with vertical track + module markers + accordion
+       ================================================= */
+    .curriculum {
+      position: relative;
+      background: #030303;
+      color: #fff;
+      padding: 8.3333rem 5rem;
+      overflow: hidden;
+    }
+    .curriculum-track {
+      position: relative;
+      z-index: 1;
+      margin-top: 4.4444rem;
+      max-width: 63.8889rem;
+    }
+    .phase {
+      position: relative;
+      padding-bottom: 2.2222rem;
+    }
+    .phase:not(:last-child) {
+      margin-bottom: 2.2222rem;
+    }
+    .phase-head {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      margin-bottom: 1.9444rem;
+      padding-left: 0.5556rem;
+    }
+    .phase-num {
+      font-family: "Sora", "Inter", sans-serif;
+      font-size: 0.7639rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      color: #44d62c;
+      text-transform: uppercase;
+    }
+    .phase-title {
+      font-family: "NexaText", "Inter", sans-serif;
+      font-weight: 700;
+      font-size: 1.6667rem;
+      line-height: 1.1;
+      letter-spacing: -0.0556rem;
+      color: #fff;
+      margin: 0;
+    }
+    .phase-line {
+      flex: 1;
+      height: 0.0694rem;
+      background: linear-gradient(90deg, rgba(68,214,44,0.4), transparent);
+    }
+    .phase-modules {
+      position: relative;
+    }
+    .phase-modules::before {
+      content: "";
+      position: absolute;
+      left: 1.4583rem;
+      top: 1.5278rem;
+      bottom: 1.5278rem;
+      width: 0.1389rem;
+      background: linear-gradient(180deg, rgba(68,214,44,0.5) 0%, rgba(68,214,44,0.15) 100%);
+    }
+    .module {
+      position: relative;
+      display: grid;
+      grid-template-columns: 3.0556rem 1fr;
+      gap: 1.6667rem;
+      align-items: start;
+      padding: 0.5556rem 0;
+      cursor: pointer;
+    }
+    .module-marker {
+      position: relative;
+      z-index: 2;
+      width: 3.0556rem;
+      height: 3.0556rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #030303;
+      border: 0.0694rem solid rgba(68,214,44,0.4);
+      font-family: "Sora", sans-serif;
+      font-size: 0.9028rem;
+      font-weight: 600;
+      color: #44d62c;
+      flex-shrink: 0;
+      transition: all 0.3s ease;
+    }
+    .module:hover .module-marker {
+      background: linear-gradient(135deg, #44d62c, #48f895);
+      color: #000;
+      border-color: transparent;
+      box-shadow: 0 0 0 0.4167rem rgba(68,214,44,0.12), 0 0 1.6667rem rgba(68,214,44,0.4);
+    }
+    .module-card {
+      padding: 0.9722rem 1.3889rem;
+      background: rgba(255,255,255,0.025);
+      border: 0.0694rem solid rgba(255,255,255,0.07);
+      border-radius: 0.8333rem;
+      transition: all 0.3s ease;
+    }
+    .module:hover .module-card {
+      transform: translateX(0.5556rem);
+      border-color: rgba(68,214,44,0.3);
+      background: rgba(255,255,255,0.04);
+    }
+    .module-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.1111rem;
+    }
+    .module-text {
+      flex: 1;
+      min-width: 0;
+    }
+    .module-title-row {
+      display: flex;
+      align-items: baseline;
+      gap: 0.9722rem;
+      flex-wrap: wrap;
+    }
+    .module-name {
+      font-family: "NexaText", sans-serif;
+      font-weight: 700;
+      font-size: 1.1111rem;
+      line-height: 1.3;
+      letter-spacing: -0.0208rem;
+      color: #fff;
+    }
+    .module-sub {
+      font-family: "Montserrat", sans-serif;
+      font-size: 0.9028rem;
+      line-height: 1.5;
+      color: rgba(255,255,255,0.55);
+      margin-top: 0.2778rem;
+    }
+    .module-toggle {
+      width: 2.2222rem;
+      height: 2.2222rem;
+      border: 0.0694rem solid rgba(255,255,255,0.15);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.3s ease;
+      font-family: "Sora", sans-serif;
+      font-size: 1.1111rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1;
+    }
+    .module.is-open .module-toggle {
+      background: linear-gradient(135deg, #44d62c, #48f895);
+      color: #000;
+      border-color: transparent;
+      transform: rotate(45deg);
+    }
+    .module-project {
+      grid-column: 2;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+    .module.is-open .module-project {
+      max-height: 16.6667rem;
+    }
+    .module-project-inner {
+      padding: 1.1111rem 1.3889rem 0.2778rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5556rem;
+    }
+    .module-project-label {
+      font-family: "Sora", sans-serif;
+      font-size: 0.6944rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      color: #44d62c;
+      text-transform: uppercase;
+    }
+    .module-project-text {
+      font-family: "Montserrat", sans-serif;
+      font-size: 0.9375rem;
+      line-height: 1.65;
+      color: rgba(255,255,255,0.7);
+      padding-left: 0.9722rem;
+      border-left: 0.1389rem solid rgba(68,214,44,0.5);
+      margin: 0;
+    }
+
+    /* Capstone (módulo 12) — destacado */
+    .module.capstone .module-marker {
+      width: 3.8889rem;
+      height: 3.8889rem;
+      background: linear-gradient(135deg, #44d62c, #48f895);
+      color: #000;
+      border: none;
+      box-shadow: 0 0 0 0.2778rem rgba(68,214,44,0.15), 0 0 2.5rem rgba(68,214,44,0.5);
+      font-size: 0.9722rem;
+    }
+    .module.capstone {
+      grid-template-columns: 3.8889rem 1fr;
+    }
+    .module.capstone .module-card {
+      background: linear-gradient(135deg, rgba(68,214,44,0.06), rgba(72,248,149,0.03));
+      border-color: rgba(68,214,44,0.4);
+      padding: 1.3889rem 1.6667rem;
+    }
+    .module.capstone .module-name {
+      font-size: 1.25rem;
+    }
+    .module.capstone .module-name .grad {
+      background: linear-gradient(89.55deg, #44d62c 0%, #48f895 118.65%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
+    @media (max-width: 900px) {
+      .curriculum { padding: 5.5556rem 1.6667rem; }
+      .module { grid-template-columns: 2.5rem 1fr; gap: 1.1111rem; }
+      .module-marker { width: 2.5rem; height: 2.5rem; font-size: 0.7639rem; }
+      .phase-modules::before { left: 1.1806rem; }
+      .module.capstone { grid-template-columns: 3.0556rem 1fr; }
+      .module.capstone .module-marker { width: 3.0556rem; height: 3.0556rem; font-size: 0.8333rem; }
+      .module-name { font-size: 0.9722rem; }
+      .module-sub { font-size: 0.8333rem; }
+    }
+
+    /* =================================================
+       SECTION 5 — PORTFOLIO (brutalist)
+       Asymmetric grid: featured Capstone (1.6fr) + 2 stacked side cards
+       Cantos retos, hairlines, mesma linguagem visual da Ementa
+       ================================================= */
+    .portfolio {
+      position: relative;
+      background: #050505;
+      color: #fff;
+      padding: 8.3333rem 5rem;
+      overflow: hidden;
+    }
+    .portfolio::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 45% 35% at 0% 0%, rgba(68,214,44,0.06), transparent 70%),
+        radial-gradient(ellipse 45% 35% at 100% 100%, rgba(72,248,149,0.05), transparent 70%);
+      pointer-events: none;
+    }
+    .portfolio .section-inner { position: relative; z-index: 1; }
+    .portfolio-header {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 2.7778rem;
+      align-items: end;
+      margin-bottom: 4.4444rem;
+    }
+    .portfolio-header > div { display: flex; flex-direction: column; align-items: flex-start; gap: 1.9444rem; }
+    .portfolio-header .pain-eyebrow { align-self: flex-start; }
+    .portfolio-header .section-title { margin: 0; max-width: 18ch; text-align: left; }
+    .portfolio-header-desc {
+      font-family: "Montserrat", "Inter", sans-serif;
+      font-size: 1.0417rem;
+      line-height: 1.6;
+      letter-spacing: -0.0125rem;
+      color: rgba(255, 255, 255, 0.65);
+      max-width: 26.3889rem;
+      margin: 0;
+      justify-self: end;
+    }
+    .portfolio-header-desc strong { color: #fff; font-weight: 600; }
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 0.0694rem;
+      background: rgba(255, 255, 255, 0.08);
+      border: 0.0694rem solid rgba(255, 255, 255, 0.08);
+    }
+    .portfolio-side {
+      display: grid;
+      grid-template-rows: 1fr 1fr;
+      gap: 0.0694rem;
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .pf-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      background: #0a0a0a;
+      color: #fff;
+      padding: 2.2222rem 1.9444rem 1.9444rem;
+      overflow: hidden;
+      transition: background 0.4s ease, color 0.4s ease;
+    }
+    .pf-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(0,0,0,0.22) 0.0694rem, transparent 0.1042rem);
+      background-size: 0.6944rem 0.6944rem;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+    }
+    .pf-card > * { position: relative; z-index: 1; }
+    .pf-card:hover {
+      background: #44d62c;
+      color: #000;
+    }
+    .pf-card:hover::before { opacity: 0.55; }
+    .pf-card:hover .pf-card-num { color: #000; opacity: 0.75; }
+    .pf-card:hover .pf-card-tag { background: #000; color: #44d62c; }
+    .pf-card:hover .pf-card-desc { color: rgba(0,0,0,0.78); }
+    .pf-card:hover .pf-card-tags { border-top-color: rgba(0,0,0,0.2); }
+    .pf-card:hover .pf-tag { border-color: rgba(0,0,0,0.35); color: rgba(0,0,0,0.85); }
+    .pf-card:hover .pf-card-title .grad {
+      background: none;
+      -webkit-background-clip: initial;
+      background-clip: initial;
+      -webkit-text-fill-color: #000;
+      color: #000;
+    }
+    .pf-card-num {
+      font-family: "Sora", "Inter", sans-serif;
+      font-weight: 500;
+      font-size: 0.7639rem;
+      letter-spacing: 0.12em;
+      color: #6ce85a;
+      text-transform: uppercase;
+      margin-bottom: 1.1111rem;
+    }
+    .pf-card-tag {
+      align-self: flex-start;
+      display: inline-flex;
+      align-items: center;
+      padding: 0.2778rem 0.6944rem;
+      background: #44d62c;
+      color: #000;
+      font-family: "Sora", "Inter", sans-serif;
+      font-weight: 600;
+      font-size: 0.7639rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 1.1111rem;
+    }
+    .pf-card-title {
+      font-family: "NexaText", "Inter", sans-serif;
+      font-weight: 600;
+      font-size: 1.4583rem;
+      line-height: 1.1;
+      letter-spacing: -0.0417rem;
+      margin: 0 0 0.8333rem;
+    }
+    .pf-card-title .grad {
+      background: linear-gradient(89.55deg, #44d62c 0%, #48f895 118.65%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
+    .pf-card-desc {
+      font-family: "Montserrat", "Inter", sans-serif;
+      font-size: 0.9722rem;
+      line-height: 1.55;
+      color: rgba(255,255,255,0.78);
+      margin: 0 0 1.6667rem;
+      flex: 1;
+    }
+    .pf-card-tags {
+      display: flex;
+      gap: 0.4167rem;
+      flex-wrap: wrap;
+      padding-top: 1.1111rem;
+      border-top: 0.0694rem solid rgba(255,255,255,0.1);
+    }
+    .pf-tag {
+      display: inline-block;
+      font-family: "Sora", "Inter", sans-serif;
+      font-weight: 500;
+      font-size: 0.6944rem;
+      letter-spacing: 0.04em;
+      padding: 0.2083rem 0.5556rem;
+      border: 0.0694rem solid rgba(255,255,255,0.18);
+      color: rgba(255,255,255,0.85);
+      white-space: nowrap;
+    }
+    .pf-card--featured {
+      padding: 0 0 2.5rem;
+    }
+    .pf-card-image {
+      display: block;
+      width: 100%;
+      aspect-ratio: 21 / 9;
+      object-fit: cover;
+      margin-bottom: 1.9444rem;
+    }
+    .pf-card--featured .pf-card-num,
+    .pf-card--featured .pf-card-headline,
+    .pf-card--featured .pf-card-desc,
+    .pf-card--featured .pf-card-tags {
+      margin-left: 2.7778rem;
+      margin-right: 2.7778rem;
+    }
+    .pf-card--featured .pf-card-title {
+      font-size: 2.2222rem;
+      line-height: 1.05;
+      letter-spacing: -0.0764rem;
+      margin: 0;
+      white-space: nowrap;
+    }
+    .pf-card-headline {
+      display: flex;
+      align-items: center;
+      gap: 1.1111rem;
+      margin-bottom: 1.1111rem;
+      flex-wrap: wrap;
+    }
+    .pf-card-headline .pf-card-tag { margin: 0; align-self: center; }
+    .pf-card--featured .pf-card-desc {
+      font-size: 1.0417rem;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 1024px) {
+      .portfolio { padding: 5.5556rem 2.2222rem; }
+      .portfolio-header { grid-template-columns: 1fr; gap: 1.6667rem; align-items: start; }
+      .portfolio-header-desc { justify-self: start; }
+      .portfolio-grid { grid-template-columns: 1fr; }
+      .pf-card--featured { padding: 2.5rem 1.9444rem; }
+      .pf-card--featured .pf-card-title { font-size: 1.8056rem; }
+    }
+    @media (max-width: 640px) {
+      .portfolio { padding: 4.4444rem 1.6667rem; }
+      .pf-card { padding: 1.9444rem 1.6667rem; }
+    }
+
+    /* =================================================
+       SECTION 6 — MARKET (proof / data)
+       Newspaper style with blockquote + glow numbers
+       ================================================= */
+    .market {
+      position: relative;
+      background: #ffffff;
+      color: #050505;
+      padding: 8.3333rem 5rem;
+      overflow: hidden;
+    }
+    .market { text-align: center; }
+    .market .eyebrow { color: #2bb31a; }
+    .market .pain-eyebrow { display: inline-flex; align-self: center; margin: 0 auto 1.9444rem; }
+    .market .section-title { color: #050505; margin-left: auto; margin-right: auto; }
+    .market .section-sub { margin-left: auto; margin-right: auto; }
+    .market .section-title .grad {
+      background: linear-gradient(89.55deg, #2bb31a 0%, #1ec977 118.65%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
+    .market .section-sub { color: rgba(0,0,0,0.65); }
+    .market .section-sub strong { color: #050505; font-weight: 600; }
+    .market-grid {
+      position: relative;
+      z-index: 1;
+      margin-top: 4.4444rem;
+      display: flex;
+      gap: 0.8333rem;
+      align-items: stretch;
+    }
+    .market-card {
+      position: relative;
+      flex: 1 1 0;
+      min-width: 0;
+      padding: 2.5rem 2.2222rem;
+      border: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 2.2222rem;
+      min-height: 31.9444rem;
+      overflow: hidden;
+      text-align: left;
+      transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease;
+    }
+    .market-card:hover {
+      transform: translateY(-0.6944rem);
+      box-shadow: 0 1.6667rem 2.7778rem rgba(68, 214, 44, 0.22);
+    }
+    /* Color variants */
+    .market-card--black { background: #050505; color: #fff; }
+    .market-card--green {
+      background: #44d62c url('assets/texture-card.jpg') center/cover no-repeat;
+      color: #050505;
+    }
+    .market-card--pistache { background: #E3FEDF; color: #050505; }
+
+    .market-card-top {
+      display: flex;
+      flex-direction: column;
+      gap: 1.1111rem;
+    }
+    .market-source {
+      font-family: "Sora", "Inter", sans-serif;
+      font-size: 0.7639rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .market-card--black .market-source { color: #6ce85a; }
+    .market-card--green .market-source { color: rgba(0,0,0,0.65); }
+    .market-card--pistache .market-source { color: #2bb31a; }
+
+    .market-title {
+      font-family: "NexaText", "Inter", sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.6667rem, 2.4vw, 2.0833rem);
+      line-height: 1.05;
+      letter-spacing: -0.0556rem;
+      margin: 0;
+    }
+    .market-desc {
+      font-family: "Montserrat", "Inter", sans-serif;
+      font-size: 0.9375rem;
+      line-height: 1.55;
+      margin: 0;
+    }
+    .market-card--black .market-desc { color: rgba(255,255,255,0.7); }
+    .market-card--green .market-desc { color: rgba(0,0,0,0.78); }
+    .market-card--pistache .market-desc { color: rgba(0,0,0,0.7); }
+
+    /* Inner white viz card */
+    .market-viz {
+      background: #ffffff;
+      border: 0.0694rem solid rgba(0,0,0,0.06);
+      padding: 1.5278rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.9722rem;
+      color: #050505;
+    }
+    /* Dark variant for black card */
+    .market-card--black .market-viz {
+      background: #161616;
+      border-color: rgba(255,255,255,0.08);
+      color: #ffffff;
+    }
+    .market-card--black .market-viz-label { color: rgba(255,255,255,0.5); }
+    .market-card--black .market-viz-big { color: #ffffff; }
+    .market-card--black .market-viz-bar { background: rgba(255,255,255,0.1); }
+    .market-card--black .market-viz-rows li { border-bottom-color: rgba(255,255,255,0.1); }
+    .market-card--black .market-viz-row-label { color: rgba(255,255,255,0.6); }
+    .market-card--black .market-viz-row-value { color: #ffffff; }
+
+    .market-viz-label {
+      font-family: "Sora", "Inter", sans-serif;
+      font-size: 0.6944rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.5);
+    }
+    .market-viz-big {
+      font-family: "NexaText", sans-serif;
+      font-weight: 700;
+      font-size: clamp(2.5rem, 4.2vw, 3.3333rem);
+      line-height: 1;
+      letter-spacing: -0.0556rem;
+      color: #050505;
+      margin: 0;
+    }
+    /* Progress bar */
+    .market-viz-bar {
+      width: 100%;
+      height: 0.4861rem;
+      background: rgba(0,0,0,0.08);
+      overflow: hidden;
+      position: relative;
+    }
+    .market-viz-bar-fill {
+      display: block;
+      height: 100%;
+      background: linear-gradient(90deg, #44d62c 0%, #48f895 100%);
+    }
+    /* Comparison rows */
+    .market-viz-rows {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .market-viz-rows li {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 0.6944rem 0;
+      border-bottom: 0.0694rem solid rgba(0,0,0,0.08);
+      font-family: "Montserrat", "Inter", sans-serif;
+      font-size: 0.875rem;
+    }
+    .market-viz-rows li:first-child { padding-top: 0; }
+    .market-viz-rows li:last-child { border-bottom: 0; padding-bottom: 0; }
+    .market-viz-row-label { color: rgba(0,0,0,0.6); }
+    .market-viz-row-value {
+      font-family: "NexaText", sans-serif;
+      font-weight: 700;
+      font-size: 1.1111rem;
+      color: #050505;
+      letter-spacing: -0.0278rem;
+    }
+    /* Trend indicator */
+    .market-viz-trend {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4167rem;
+      font-family: "Sora", "Inter", sans-serif;
+      font-size: 0.8333rem;
+      font-weight: 600;
+      color: #2bb31a;
+    }
+    .market-viz-trend svg { width: 0.8333rem; height: 0.8333rem; }
+
+    @media (max-width: 1024px) {
+      .market { padding: 5.5556rem 1.6667rem; }
+      .market-grid { flex-wrap: wrap; gap: 0.6944rem; }
+      .market-card { flex: 1 1 calc(50% - 0.6944rem); min-height: 20.8333rem; padding: 2.2222rem; }
+    }
+    @media (max-width: 640px) {
+      .market-grid { flex-direction: column; }
+      .market-card { flex: 1 1 auto; min-height: auto; }
+    }
+
+    /* =================================================
+       SECTION — PROGRAMAS 2026.1 (catálogo)
+       Inspirado em refs/cursos-standalone, adaptado aos tokens
+       do projeto. Hover: takeover verde + halftone overlay.
+       ================================================= */
+    .programas {
+      position: relative;
+      background: #090909;
+      color: #fff;
+      padding: 8.3333rem 5rem;
+      overflow: hidden;
+      border-bottom: 0.0694rem solid var(--border-soft);
+    }
+    .programas::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 45% 35% at 100% 0%, rgba(68,214,44,0.06), transparent 70%),
+        radial-gradient(ellipse 45% 35% at 0% 100%, rgba(72,248,149,0.05), transparent 70%);
+      pointer-events: none;
+    }
+    .programas .section-inner { position: relative; z-index: 1; }
+    .programas-header {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 2.7778rem;
+      align-items: end;
+      margin-bottom: 4.4444rem;
+    }
+    .programas-header > div { display: flex; flex-direction: column; align-items: flex-start; gap: 1.9444rem; }
+    .programas-header .pain-eyebrow { align-self: flex-start; }
+    .programas-header .section-title { margin: 0; max-width: 18ch; text-align: left; }
+    .programas-header-desc {
+      font-family: "Montserrat", "Inter", sans-serif;
+      font-size: 1.0417rem;
+      line-height: 1.6;
+      letter-spacing: -0.0125rem;
+      color: rgba(255, 255, 255, 0.65);
+      max-width: 26.3889rem;
+      margin: 0;
+      justify-self: end;
+    }
+    .programas-header-desc strong { color: #fff; font-weight: 600; }
+    .programas-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.0694rem;
+      background: rgba(255, 255, 255, 0.08);
+      border: 0.0694rem solid rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+    }
+    .programa-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      background: #0a0a0a;
+      color: #fff;
+      padding: 1.9444rem 1.6667rem 1.6667rem;
+      min-height: 23.6111rem;
+      overflow: hidden;
+      text-decoration: none;
+      transition: background 0.4s ease, color 0.4s ease;
+    }
+    .programa-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(0,0,0,0.22) 0.0694rem, transparent 0.1042rem);
+      background-size: 0.6944rem 0.6944rem;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+    }
+    .programa-card:hover {
+      background: #44d62c;
+      color: #000;
+    }
+    .programa-card:hover::before { opacity: 0.55; }
+    .programa-card > * { position: relative; z-index: 1; }
+    .programa-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 2.7778rem;
+    }
+    .programa-code {
+      font-family: "Sora", "Inter", sans-serif;
+      font-weight: 500;
+      font-size: 0.7639rem;
+      letter-spacing: 0.12em;
+      opacity: 0.5;
+      transition: opacity 0.4s ease;
+    }
+    .programa-card:hover .programa-code { opacity: 0.75; }
+    .programa-title {
+      font-family: "NexaText", "Inter", sans-serif;
+      font-weight: 600;
+      font-size: 1.4583rem;
+      line-height: 1.08;
+      letter-spacing: -0.0417rem;
+      max-width: 14ch;
+      margin: 0 0 0.8333rem;
+    }
+    .programa-level {
+      align-self: flex-start;
+      display: inline-flex;
+      align-items: center;
+      padding: 0.2778rem 0.6944rem;
+      background: #44d62c;
+      color: #000;
+      font-family: "Sora", "Inter", sans-serif;
+      font-weight: 600;
+      font-size: 0.7639rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 1.1111rem;
+      transition: background 0.4s ease, color 0.4s ease;
+    }
+    .programa-card:hover .programa-level {
+      background: #000;
+      color: #44d62c;
+    }
+    .programa-desc {
+      font-family: "Montserrat", "Inter", sans-serif;
+      font-size: 0.9722rem;
+      line-height: 1.55;
+      opacity: 0.78;
+      margin: 0 0 1.6667rem;
+      flex: 1;
+    }
+    .programa-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.8333rem;
+      padding-top: 1.1111rem;
+      border-top: 0.0694rem solid rgba(255,255,255,0.1);
+      font-size: 0.8333rem;
+      transition: border-color 0.4s ease;
+    }
+    .programa-card:hover .programa-foot { border-top-color: rgba(0, 0, 0, 0.2); }
+    .programa-tags {
+      display: flex;
+      gap: 0.4167rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .programa-tag {
+      display: inline-block;
+      font-family: "Sora", "Inter", sans-serif;
+      font-weight: 500;
+      font-size: 0.6944rem;
+      letter-spacing: 0.04em;
+      padding: 0.2083rem 0.5556rem;
+      border: 0.0694rem solid rgba(255,255,255,0.18);
+      border-radius: 0.2778rem;
+      opacity: 0.85;
+      white-space: nowrap;
+      transition: border-color 0.4s ease, color 0.4s ease;
+    }
+    .programa-card:hover .programa-tag { border-color: rgba(0,0,0,0.35); }
+    .programas-cta {
+      display: flex;
+      justify-content: center;
+      margin-top: 3.3333rem;
+    }
+    @media (max-width: 1200px) {
+      .programas-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 1024px) {
+      .programas { padding: 5.5556rem 2.2222rem; }
+      .programas-header { grid-template-columns: 1fr; gap: 1.6667rem; align-items: start; }
+      .programas-header-desc { justify-self: start; }
+      .programas-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .programas { padding: 4.4444rem 1.6667rem; }
+      .programas-grid { grid-template-columns: 1fr; }
+      .programa-card { min-height: auto; padding: 1.9444rem 1.6667rem; }
+      .programa-foot { flex-direction: column; align-items: flex-start; gap: 0.8333rem; }
+      .programa-tags { justify-content: flex-start; }
+    }
+
+    /* =================================================
+       SECTION 7 — FAQ
+       Accordion 2-col with gradient dividers
+       ================================================= */
+    .faq {
+      position: relative;
+      background: #ffffff;
+      color: #050505;
+      padding: 8.3333rem 5rem;
+      overflow: hidden;
+    }
+    .faq::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 50% 40% at 0% 50%, rgba(68,214,44,0.07), transparent 70%),
+        radial-gradient(ellipse 50% 40% at 100% 50%, rgba(72,248,149,0.06), transparent 70%);
+      pointer-events: none;
+    }
+    .faq .eyebrow { color: #2bb31a; }
+    .faq .section-title { color: #050505; }
+    .faq .section-title .grad {
+      background: linear-gradient(89.55deg, #2bb31a 0%, #1ec977 118.65%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
+    .faq-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 0 5rem;
+      align-items: stretch;
+    }
+    .faq-head {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      text-align: left;
+      gap: 2.7778rem;
+    }
+    .faq-head-top {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.6667rem;
+    }
+    .faq-head .pain-eyebrow { align-self: flex-start; }
+    .faq-head .section-title { margin: 0; max-width: 14ch; text-align: left; }
+    .faq-head-desc {
+      font-family: "Montserrat", "Inter", sans-serif;
+      font-size: 1rem;
+      line-height: 1.6;
+      letter-spacing: -0.0125rem;
+      color: rgba(0,0,0,0.65);
+      max-width: 36ch;
+      margin: 0;
+    }
+    .faq-contacts {
+      margin-top: auto;
+      display: flex;
+      justify-content: left;
+      align-items: center;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+    }
+    .faq-contact {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.9722rem;
+      text-decoration: none;
+      color: inherit;
+      transition: color 0.2s ease;
+    }
+    .faq-contact:hover { color: #2bb31a; }
+    .faq-contact:hover .faq-contact-icon {
+      background: #44d62c;
+      color: #000;
+    }
+    .faq-contact-icon {
+      width: 2.9167rem;
+      height: 2.9167rem;
+      background: #E3FEDF;
+      color: #050505;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.25s ease, color 0.25s ease;
+    }
+    .faq-contact-icon svg { width: 1.25rem; height: 1.25rem; }
+    .faq-contact-text {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1389rem;
+    }
+    .faq-contact-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4167rem;
+      font-family: "Montserrat", sans-serif;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: #050505;
+    }
+    .faq-contact-arrow {
+      width: 0.9722rem;
+      height: 0.9722rem;
+      color: #2bb31a;
+      flex-shrink: 0;
+      transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1);
+    }
+    .faq-contact:hover .faq-contact-arrow {
+      transform: translate(0.1389rem, -0.1389rem);
+    }
+    .faq-contact-value {
+      font-family: "Montserrat", sans-serif;
+      font-size: 0.8333rem;
+      color: rgba(0,0,0,0.55);
+    }
+    .faq-col {
+      display: flex;
+      flex-direction: column;
+    }
+    .faq-item {
+      position: relative;
+      border-bottom: 0.0694rem solid rgba(0,0,0,0.1);
+      padding: 0.2778rem 0;
+    }
+    .faq-q {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.3889rem;
+      padding: 1.5278rem 0.5556rem;
+      cursor: pointer;
+      user-select: none;
+      font-family: "NexaText", sans-serif;
+      font-weight: 600;
+      font-size: 1.1111rem;
+      line-height: 1.35;
+      letter-spacing: -0.0208rem;
+      color: #050505;
+      transition: all 0.25s ease;
+    }
+    .faq-q:hover {
+      color: #2bb31a;
+      letter-spacing: -0.0278rem;
+    }
+    .faq-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(0,0,0,0.55);
+      flex-shrink: 0;
+      transition: transform 0.3s ease, color 0.3s ease;
+      font-family: "Sora", sans-serif;
+      font-size: 2.0833rem;
+      font-weight: 200;
+      line-height: 1;
+    }
+    .faq-item.is-open .faq-icon {
+      color: #2bb31a;
+      transform: rotate(45deg);
+    }
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+    .faq-item.is-open .faq-a {
+      max-height: 27.7778rem;
+    }
+    .faq-a-inner {
+      padding: 0 0.5556rem 1.5278rem 0.5556rem;
+      border-left: 0.1389rem solid rgba(68,214,44,0.5);
+      margin-left: 0.5556rem;
+      padding-left: 1.5278rem;
+      font-family: "Montserrat", sans-serif;
+      font-size: 0.9722rem;
+      line-height: 1.7;
+      color: rgba(0,0,0,0.72);
+    }
+    @media (max-width: 900px) {
+      .faq { padding: 5.5556rem 1.6667rem; }
+      .cta-marquee { margin: 5.5556rem -1.6667rem 0; }
+      .faq-grid { grid-template-columns: 1fr; gap: 2.7778rem; align-items: start; }
+    }
+
+    /* =================================================
+       SECTION 8 — FINAL CTA (drama)
+       Multi-layer bg, gigant title, gradient-bordered card
+       ================================================= */
+    .final-cta {
+      position: relative;
+      text-align: left;
+      padding: 6.9444rem 2.7778rem 5rem;
+      background: transparent;
+      color: #fff;
+      overflow: hidden;
+    }
+    .final-cta-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 90rem;
+      margin: 0 auto;
+    }
+    .final-cta-col--text {
+      display: flex;
+      flex-direction: column;
+      gap: 8.3333rem;
+      align-items: flex-start;
+      max-width: 40rem;
+    }
+    .final-cta-top { display: flex; flex-direction: column; gap: 1.6667rem; align-items: flex-start; }
+    .final-cta-bottom { display: flex; flex-direction: column; gap: 1.6667rem; align-items: flex-start; }
+    .final-cta .eyebrow {
+      display: inline-flex;
+      margin: 0;
+    }
+    .final-cta-title {
+      font-family: "NexaText", "Inter", sans-serif;
+      font-weight: 400;
+      font-size: clamp(2.2222rem, 3.6vw, 3.3333rem);
+      line-height: 1.05;
+      letter-spacing: -0.1736rem;
+      color: #fff;
+      margin: 0;
+    }
+    .final-cta-title .grad {
+      background: linear-gradient(89.55deg, #44d62c 0%, #48f895 118.65%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      filter: drop-shadow(0 0 1.6667rem rgba(68,214,44,0.4));
+    }
+    .final-cta-sub {
+      font-family: "Montserrat", "Inter", sans-serif;
+      font-size: 1.0833rem;
+      line-height: 1.6;
+      letter-spacing: -0.0139rem;
+      color: rgba(255,255,255,0.7);
+      margin: 0;
+      max-width: 50ch;
+    }
+    .final-cta-sub strong { color: #fff; font-weight: 600; }
+    .final-cta-card {
+      width: 100%;
+      max-width: none;
+      margin: 0;
+      border-radius: 1.1111rem;
+      overflow: hidden;
+    }
+    .final-cta-card .gb-inner {
+      padding: 1.6667rem 2.2222rem;
+      background: rgba(8, 12, 9, 0.85);
+      backdrop-filter: blur(0.9722rem);
+      -webkit-backdrop-filter: blur(0.9722rem);
+      text-align: left;
+    }
+    .final-cta-card-label {
+      font-family: "Sora", sans-serif;
+      font-size: 0.7639rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      color: #6ce85a;
+      text-transform: uppercase;
+      margin: 0 0 0.6944rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6944rem;
+    }
+    .final-cta-card-label::before {
+      content: "";
+      width: 0.4861rem;
+      height: 0.4861rem;
+      border-radius: 50%;
+      background: #44d62c;
+      box-shadow: 0 0 0.8333rem #44d62c;
+    }
+    .final-cta-card-text {
+      font-family: "Montserrat", sans-serif;
+      font-size: 0.9722rem;
+      line-height: 1.65;
+      color: rgba(255,255,255,0.75);
+      margin: 0;
+    }
+    .final-cta-card-text strong {
+      color: #fff;
+      font-weight: 600;
+      background: linear-gradient(transparent 60%, rgba(68,214,44,0.25) 60%);
+    }
+    .final-cta-scarcity {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5556rem;
+      padding: 0.5556rem 1.1111rem;
+      background: rgba(68,214,44,0.1);
+      border: 0.0694rem solid rgba(68,214,44,0.3);
+      border-radius: 69.375rem;
+      font-family: "Sora", sans-serif;
+      font-size: 0.8333rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: #6ce85a;
+      margin: 0;
+    }
+    .final-cta-scarcity .pulse {
+      display: inline-block;
+      width: 0.5556rem;
+      height: 0.5556rem;
+      border-radius: 50%;
+      background: #44d62c;
+      box-shadow: 0 0 0 0 rgba(68,214,44,0.7);
+      animation: cu-pulse 1.8s infinite;
+    }
+    @keyframes cu-pulse {
+      0% { box-shadow: 0 0 0 0 rgba(68,214,44,0.7); }
+      70% { box-shadow: 0 0 0 0.8333rem rgba(68,214,44,0); }
+      100% { box-shadow: 0 0 0 0 rgba(68,214,44,0); }
+    }
+    .final-cta-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.6667rem;
+      padding: 0.2778rem 0.2778rem 0.2778rem 2.5rem;
+      background: linear-gradient(135deg, #44d62c, #48f895);
+      color: #000;
+      font-family: "Montserrat", "Inter", sans-serif;
+      font-weight: 700;
+      font-size: 1.25rem;
+      letter-spacing: 0.0111rem;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      height: 4.4444rem;
+      border-radius: 0.6944rem;
+      filter: drop-shadow(0 0.8333rem 2.5rem rgba(68,214,44,0.4));
+    }
+    .final-cta-button:hover {
+      filter: drop-shadow(0 1.1111rem 3.3333rem rgba(68,214,44,0.6)) brightness(1.05);
+      transform: translateY(-0.1389rem);
+    }
+    .final-cta-button .arrow-box {
+      width: 3.8889rem;
+      height: 3.8889rem;
+      background: rgba(0,0,0,0.16);
+      border-radius: 0.5556rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .final-cta-button .arrow-box svg {
+      width: 1.9444rem;
+      height: 1.9444rem;
+    }
+    .final-cta-tags {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.6944rem;
+      margin-top: 2.5rem;
+    }
+    @media (max-width: 900px) {
+      .final-cta { padding: 5.5556rem 1.6667rem 4.4444rem; }
+      .final-cta-button { font-size: 1.1111rem; height: 3.8889rem; padding-left: 1.6667rem; }
+      .final-cta-button .arrow-box { width: 3.3333rem; height: 3.3333rem; }
+    }
+
+    /* =================================================
+       SECTION 9 — FOOTER (multi-column)
+       4 cols + grid backdrop + newsletter form
+       ================================================= */
+    /* Marquee dentro da FAQ — herda fundo branco, texto preto, full-bleed */
+    .cta-marquee {
+      position: relative;
+      margin: 8.3333rem -5rem 0;
+      background: transparent;
+      border-top: 0.0694rem solid rgba(0,0,0,0.12);
+      border-bottom: 0.0694rem solid rgba(0,0,0,0.12);
+      padding: 1.1111rem 0;
+      overflow: hidden;
+      display: flex;
+    }
+    .cta-marquee-track {
+      display: flex;
+      align-items: center;
+      gap: 2.7778rem;
+      flex-shrink: 0;
+      white-space: nowrap;
+      animation: cta-marquee-scroll 40s linear infinite;
+      padding-right: 2.7778rem;
+    }
+    .cta-marquee-item {
+      font-family: "Sora", "Inter", sans-serif;
+      font-size: 0.9722rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #050505;
+      flex-shrink: 0;
+    }
+    .cta-marquee-dot {
+      flex-shrink: 0;
+      width: 1.1111rem;
+      height: 1.0417rem;
+      display: block;
+    }
+    @keyframes cta-marquee-scroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .cta-marquee-track { animation: none; }
+    }
+
+    /* Outer shell que abriga Final CTA + Footer compartilhando a mesma bg image */
+    .closing-shell {
+      position: relative;
+      padding: 0 2.7778rem 1.3889rem;
+      background: #050505;
+      overflow: hidden;
+      isolation: isolate;
+    }
+    .closing-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image: url('assets/magnific_troque-o-tom-dessa-imagem_2920457361.jpeg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    .closing-bg::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg,
+        rgba(0,0,0,0.7) 0%,
+        rgba(0,0,0,0) 100%);
+      pointer-events: none;
+    }
+    .closing-bg::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg,
+        rgba(5,5,5,0.45) 0%,
+        rgba(5,5,5,0.30) 35%,
+        rgba(5,5,5,0.55) 75%,
+        rgba(5,5,5,0.85) 100%);
+      pointer-events: none;
+    }
+    .closing-shell > .final-cta,
+    .closing-shell > .site-footer { position: relative; z-index: 1; }
+    .closing-corner-tr {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 25.0694rem;
+      height: 4.6528rem;
+      z-index: 2;
+      pointer-events: none;
+      display: block;
+    }
+
+    .site-footer {
+      position: relative;
+      z-index: 1;
+      background: #000;
+      border: 0.0694rem solid rgba(255,255,255,0.08);
+      padding: 5rem 4.4444rem 2.2222rem;
+      color: #fff;
+      overflow: hidden;
+      max-width: 90rem;
+      margin: 0 auto;
+    }
+    .site-footer::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(90deg, rgba(68,214,44,0.025) 0.0694rem, transparent 0.0694rem),
+        linear-gradient(0deg, rgba(68,214,44,0.025) 0.0694rem, transparent 0.0694rem);
+      background-size: 4.1667rem 4.1667rem;
+      pointer-events: none;
+      mask-image: linear-gradient(180deg, #000, transparent 80%);
+      -webkit-mask-image: linear-gradient(180deg, #000, transparent 80%);
+    }
+    .footer-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 90rem;
+      margin: 0 auto;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2.4fr 0.0694rem 1fr 0.0694rem 1fr;
+      gap: 0 3.3333rem;
+      padding-bottom: 3.3333rem;
+      border-bottom: 0.0694rem solid rgba(255,255,255,0.08);
+    }
+    .footer-divider {
+      align-self: stretch;
+      width: 0.0694rem;
+      background: linear-gradient(180deg, transparent, rgba(255,255,255,0.1) 30%, rgba(255,255,255,0.1) 70%, transparent);
+    }
+    .footer-col h5 {
+      font-family: "Sora", sans-serif;
+      font-size: 0.7639rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      margin: 0 0 1.3889rem;
+    }
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .footer-brand .footer-logo img {
+      height: 2.5rem;
+      width: auto;
+    }
+    .footer-tagline {
+      font-family: "Montserrat", sans-serif;
+      font-size: 0.9375rem;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.55);
+      max-width: 19.4444rem;
+      margin: 0;
+    }
+    .footer-social {
+      display: flex;
+      gap: 0.5556rem;
+      margin-top: 0.2778rem;
+    }
+    .footer-social a {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      border: 0.0694rem solid rgba(255,255,255,0.12);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.6);
+      transition: all 0.25s ease;
+    }
+    .footer-social a:hover {
+      color: #44d62c;
+      border-color: rgba(68,214,44,0.5);
+      box-shadow: 0 0 1.25rem rgba(68,214,44,0.3);
+    }
+    .footer-social svg { width: 1.1111rem; height: 1.1111rem; }
+    .footer-links {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6944rem;
+    }
+    .footer-links a {
+      display: inline-flex;
+      align-items: center;
+      font-family: "Montserrat", sans-serif;
+      font-size: 0.9722rem;
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .footer-links a:hover {
+      color: #6ce85a;
+    }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.1111rem;
+      padding-top: 2.2222rem;
+    }
+    .footer-bottom-left {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+    }
+    .footer-copy {
+      font-family: "Montserrat", sans-serif;
+      font-size: 0.8333rem;
+      color: rgba(255,255,255,0.4);
+    }
+    .footer-esic-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5556rem;
+      padding: 0.4167rem 0.8333rem;
+      background: rgba(255,255,255,0.04);
+      border: 0.0694rem solid rgba(255,255,255,0.08);
+      border-radius: 69.375rem;
+      font-family: "Sora", sans-serif;
+      font-size: 0.6944rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.6);
+      text-transform: uppercase;
+    }
+    .footer-esic-badge::before {
+      content: "";
+      width: 0.4167rem;
+      height: 0.4167rem;
+      border-radius: 50%;
+      background: #44d62c;
+    }
+    .footer-legal {
+      display: flex;
+      gap: 1.25rem;
+      font-family: "Sora", sans-serif;
+      font-size: 0.7639rem;
+    }
+    .footer-legal a {
+      color: rgba(255,255,255,0.45);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .footer-legal a:hover {
+      color: #6ce85a;
+    }
+    .footer-disc {
+      max-width: 90rem;
+      margin: 1.6667rem auto 0;
+      font-family: "Montserrat", sans-serif;
+      font-size: 0.7639rem;
+      color: rgba(255,255,255,0.22);
+      line-height: 1.65;
+      text-align: center;
+    }
+    @media (max-width: 1024px) {
+      .closing-shell { padding: 0 1.6667rem 1.6667rem; }
+      .site-footer { padding: 3.8889rem 2.2222rem 1.9444rem; }
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 2.7778rem 2.2222rem;
+      }
+      .footer-divider { display: none; }
+    }
+    @media (max-width: 640px) {
+      .closing-shell { padding: 0 0.8333rem 0.8333rem; }
+      .footer-grid { grid-template-columns: 1fr; gap: 2.2222rem; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+    }
+
+    /* ===== Sticky bar ===== */
+    .sticky-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.95);
+      border-top: 0.0694rem solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(0.9722rem);
+      -webkit-backdrop-filter: blur(0.9722rem);
+      padding: 0.9722rem 2.2222rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.1111rem;
+      z-index: 200;
+      transform: translateY(105%);
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .sticky-bar.is-show { transform: translateY(0); }
+    .sticky-text {
+      font-family: "Montserrat", sans-serif;
+      font-size: 0.9028rem;
+      color: rgba(255, 255, 255, 0.85);
+      flex: 1;
+      min-width: 0;
+    }
+    .sticky-text strong { color: #fff; font-weight: 600; }
+    .sticky-bar .cta-primary {
+      height: 3.0556rem;
+      font-size: 0.9028rem;
+      padding: 0.2778rem 0.2778rem 0.2778rem 1.25rem;
+      gap: 0.8333rem;
+      flex-shrink: 0;
+    }
+    .sticky-bar .cta-arrow { width: 2.5rem; height: 2.5rem; }
+    .sticky-bar .cta-arrow svg { width: 1.25rem; height: 1.25rem; }
+    @media (max-width: 640px) {
+      .sticky-bar { padding: 0.8333rem 1.1111rem; }
+      .sticky-text { font-size: 0.8333rem; }
+      .sticky-text strong { display: block; }
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+</head>
+<body>
+  <a href="#cadastrar" class="announce" aria-label="Pós-Graduação em Engenharia de IA — saiba mais">
+    <span class="announce-text">🎓 Pós-Graduação em Engenharia de IA · Chancela ESIC Internacional · Vagas limitadas — 1ª turma</span>
+    <span class="announce-icon" aria-hidden="true">
+      <svg viewBox="0 0 15 14" fill="none">
+        <path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
+  </a>
+
+  <header class="site-header">
+    <div class="nav">
+      <div class="nav-inner">
+        <div class="nav-menu">
+          <a href="#" class="nav-logo" aria-label="Coders University">
+            <img src="assets/logo-coders-university.png" alt="Coders University" />
+          </a>
+          <ul class="nav-links">
+            <li><a href="#inicio" class="is-active">Início</a></li>
+            <li><a href="#problema">O Problema</a></li>
+            <li><a href="#faculty">Faculty</a></li>
+            <li><a href="#perfil">Perfis</a></li>
+            <li><a href="#programas">Ementa</a></li>
+            <li><a href="#portfolio">Projetos</a></li>
+            <li><a href="#faq">FAQ</a></li>
+          </ul>
+        </div>
+
+        <div class="auth-actions">
+          <a href="#login" class="btn btn-login">Log in</a>
+          <a href="#cadastrar" class="btn btn-signup">Faça parte</a>
+
+          <button type="button" class="nav-toggle" aria-label="Abrir menu">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+              <path d="M4 7h14M4 11h14M4 15h14" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="stage" id="inicio">
+    <div class="bg-blinds" id="bg-blinds" aria-hidden="true"></div>
+
+    <div class="stage-inner">
+      <div class="hero-content">
+        <div class="hero-stack">
+          <div class="hero-pill anim anim-scale" style="--anim-delay: 100ms;">
+            <div class="hero-pill-left">
+              <span class="hero-pill-icon" aria-hidden="true">
+                <svg viewBox="0 0 18 18" fill="none">
+                  <circle cx="9" cy="9" r="7.5" stroke="currentColor" stroke-width="1.4"/>
+                  <path d="M9 4l1.2 2.8L13 7.4l-2.1 1.8L11.4 12 9 10.5 6.6 12l.5-2.8L5 7.4l2.8-.6L9 4z" fill="currentColor"/>
+                </svg>
+              </span>
+              <span class="hero-pill-text">ESIC INTERNACIONAL · Madrid</span>
+            </div>
+            <span class="hero-pill-tag">1ª Turma · 2026</span>
+          </div>
+
+          <div class="hero-text">
+            <h1 class="hero-title anim" style="--anim-delay: 200ms;">A Pós em IA com <span class="grad">diploma internacional</span> e projetos reais que abrem vagas na gringa</h1>
+            <p class="hero-sub anim" style="--anim-delay: 350ms;">Agentes autônomos, RAG e sistemas AI-first aplicados a problemas reais de empresas — com a chancela da ESIC Internacional no seu currículo. O diploma que recrutadores de fora já reconhecem, sem você precisar explicar o que é.</p>
+          </div>
+        </div>
+
+        <div class="hero-ctas anim" style="--anim-delay: 500ms;">
+          <a href="#cadastrar" class="cta-primary">
+            <span>Quero tentar uma bolsa</span>
+            <span class="cta-arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </a>
+          <a href="#programas" class="cta-secondary">Ver ementa</a>
+        </div>
+      </div>
+
+      <div class="hero-photo anim anim-right" style="--anim-delay: 250ms;" aria-hidden="true">
+        <img src="assets/profressors.jpg" alt="" />
+        <div class="hero-tag hero-tag-levir anim" style="--anim-delay: 700ms;">
+          <span class="name">Carlos Levir</span>
+          <span class="role">Ex-Senior Engineer · PayPal</span>
+        </div>
+        <div class="hero-tag hero-tag-castig anim" style="--anim-delay: 850ms;">
+          <span class="name">Matheus Castiglioni</span>
+          <span class="role">Ex-Senior Engineer · PayPal</span>
+        </div>
+      </div>
+    </div>
+
+    <img src="assets/folder-head.svg" alt="" class="hero-folder" aria-hidden="true" />
+  </main>
+
+  <!-- ===== STATS BAR ===== -->
+  <section class="stats-bar" aria-label="Destaques do programa">
+    <div class="stats-inner">
+      <div class="stat-item anim" style="--anim-delay: 0ms;">
+        <span class="stat-num">12 meses</span>
+        <span class="stat-label">360 horas de conteúdo</span>
+      </div>
+      <span class="stat-divider anim anim-fade" style="--anim-delay: 80ms;" aria-hidden="true"></span>
+      <div class="stat-item anim" style="--anim-delay: 120ms;">
+        <span class="stat-num">Gravado</span>
+        <span class="stat-label">+ plantões ao vivo semanais</span>
+      </div>
+      <span class="stat-divider anim anim-fade" style="--anim-delay: 200ms;" aria-hidden="true"></span>
+      <div class="stat-item anim" style="--anim-delay: 240ms;">
+        <span class="stat-num">Sem TCC</span>
+        <span class="stat-label">Foco total nos projetos práticos</span>
+      </div>
+      <span class="stat-divider anim anim-fade" style="--anim-delay: 320ms;" aria-hidden="true"></span>
+      <div class="stat-item anim" style="--anim-delay: 360ms;">
+        <span class="stat-num">ESIC Internacional</span>
+        <span class="stat-label">Diploma com chancela global</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ESIC SECTION ===== -->
+  <section class="esic-section" id="diferenciais">
+    <div class="esic-inner">
+      <div class="esic-text">
+        <div class="esic-text-stack">
+          <div class="esic-title-group">
+            <p class="esic-eyebrow anim" style="--anim-delay: 0ms;">Chancela Internacional</p>
+            <h2 class="esic-title anim" style="--anim-delay: 100ms;">Não é uma certificação qualquer — é o diploma de uma das <span class="grad">maiores universidades</span> do mundo</h2>
+          </div>
+          <p class="esic-desc anim" style="--anim-delay: 250ms;">Ao concluir a Pós, você recebe um <strong>diploma com chancela da ESIC Internacional</strong> — fundada em 1965 em Madrid, presente em mais de 30 países. Quando um recrutador europeu ou americano vê ESIC no seu currículo, ele já sabe o que é. Esse reconhecimento vale dinheiro — e abre portas que um certificado local simplesmente não abre.</p>
+        </div>
+        <a href="#cadastrar" class="cta-primary esic-cta anim" style="--anim-delay: 400ms;">
+          <span>Compre agora</span>
+          <span class="cta-arrow" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </a>
+      </div>
+
+    </div>
+
+    <div class="esic-map anim anim-fade" id="esicMap" style="--anim-delay: 200ms;" role="img" aria-label="Mapa-múndi destacando a presença internacional da ESIC em mais de 30 países">
+      <img src="assets/world-map.svg" alt="" class="esic-map-img" aria-hidden="true" />
+    </div>
+
+    <div class="esic-card-wrap" aria-hidden="true">
+      <div class="esic-card anim anim-scale" style="--anim-delay: 500ms;">
+        <div class="esic-logo" role="img" aria-label="ESIC Internacional">
+          <img class="esic-logo-bg" src="assets/esic-logo.png" alt="" />
+          <div class="esic-logo-mask"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PAIN — Figma 2210:3413 ===== -->
+  <section class="pain" id="problema">
+    <div class="section-inner">
+      <header class="pain-header">
+        <div class="pain-header-stack">
+          <span class="pain-eyebrow anim">O Problema</span>
+          <h2 class="pain-title anim" style="--anim-delay: 100ms;">Os <span class="grad">outros cursos</span> ensinam 3 coisas que não mudam nada na sua carreira</h2>
+        </div>
+        <p class="pain-sub anim" style="--anim-delay: 200ms;">Você está sendo bombardeado por opções. A maioria vai te deixar no mesmo lugar. Veja por quê.</p>
+      </header>
+
+      <div class="pain-cards">
+        <article class="pain-card anim" style="--anim-delay: 0ms;">
+          <div class="pain-card-head">
+            <span class="pain-card-tag">// Erro 01</span>
+            <span class="pain-card-close" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+              </svg>
+            </span>
+          </div>
+          <div class="pain-card-body">
+            <h3>Usar IA pra programar mais rápido</h3>
+            <p>Todo dev já faz isso. Isso não te destaca, não aumenta seu nível salarial e não diferencia nada no seu perfil internacional.</p>
+          </div>
+        </article>
+
+        <article class="pain-card anim" style="--anim-delay: 100ms;">
+          <div class="pain-card-head">
+            <span class="pain-card-tag">// Erro 02</span>
+            <span class="pain-card-close" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+              </svg>
+            </span>
+          </div>
+          <div class="pain-card-body">
+            <h3>Criar modelos de IA do zero</h3>
+            <p>Isso é trabalho de pesquisador. O mercado precisa de engenheiros que integram e operam sistemas de IA — não que criam modelos do zero.</p>
+          </div>
+        </article>
+
+        <article class="pain-card anim" style="--anim-delay: 200ms;">
+          <div class="pain-card-head">
+            <span class="pain-card-tag">// Erro 03</span>
+            <span class="pain-card-close" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+              </svg>
+            </span>
+          </div>
+          <div class="pain-card-body">
+            <h3>Aprender teoria sem projeto real</h3>
+            <p>Professores acadêmicos que nunca colocaram um sistema em produção. Você sai com certificado — mas sem portfólio e sem diferencial real.</p>
+          </div>
+        </article>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== PROBLEM QUOTE — Figma 2210:34315 ===== -->
+  <div class="problem-tab-bridge" aria-hidden="true">
+    <svg class="problem-tab" viewBox="0 0 361 67" preserveAspectRatio="none">
+      <path d="M0 67H360.5V0H54.5L0 67Z" fill="#000"/>
+    </svg>
+  </div>
+  <section class="problem-quote">
+    <div class="problem-quote-inner">
+      <span class="pain-eyebrow anim">A Virada</span>
+      <p class="problem-quote-text anim" style="--anim-delay: 100ms;">O que o mercado paga muito bem hoje é <span class="grad">um único skill:</span> integrar toda a camada de IA nos sistemas reais que as empresas já usam — com agentes, RAG, dados e arquitetura AI-first. <span class="grad">Isso é exatamente o que vamos te ensinar.</span></p>
+    </div>
+    <div class="problem-quote-halftone" aria-hidden="true"></div>
+  </section>
+
+  <img src="assets/Head.svg" alt="" class="faculty-head-banner" aria-hidden="true" />
+
+  <!-- ===== FACULTY — Photo cards (Figma 2210:42035) ===== -->
+  <section class="faculty" id="faculty">
+    <div class="section-inner">
+      <header class="pain-header">
+        <div class="pain-header-stack">
+          <span class="pain-eyebrow anim">Faculty</span>
+          <h2 class="pain-title anim" style="--anim-delay: 100ms;">Quem já está <span class="grad">na linha de frente</span> do mercado dando aula</h2>
+        </div>
+        <p class="pain-sub anim" style="--anim-delay: 200ms;">Nenhum professor acadêmico que nunca operou um sistema de IA de verdade. Só quem está construindo essas soluções agora.</p>
+      </header>
+
+      <div class="faculty-photos">
+        <article class="faculty-photo-card anim" style="--anim-delay: 0ms;">
+          <div class="faculty-photo-img left">
+            <img src="assets/Levir.jpg" alt="Carlos Levir" />
+          </div>
+          <div class="faculty-photo-block">
+            <div class="faculty-photo-plate">
+              <div class="faculty-photo-shield" aria-hidden="true">
+                <img src="assets/logo-team.svg" alt="" />
+              </div>
+              <div class="faculty-photo-info">
+                <p class="faculty-photo-name">Carlos Levir</p>
+                <p class="faculty-photo-role">Ex-Senior Engineer · PayPal</p>
+              </div>
+            </div>
+            <div class="faculty-photo-bio">
+              <div class="faculty-photo-bio-content">
+                <p class="faculty-photo-bio-text">Ex-Senior Engineer da PayPal e arquiteto de sistemas em larga escala. Atuou na construção de plataformas de pagamento usadas por milhões de usuários e hoje lidera projetos de IA aplicada e engenharia AI-first.</p>
+                <span class="faculty-photo-tag">Ex-PayPal</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="faculty-photo-card anim" style="--anim-delay: 150ms;">
+          <div class="faculty-photo-img right">
+            <img src="assets/Matheus.jpg" alt="Matheus Castiglioni" />
+          </div>
+          <div class="faculty-photo-block">
+            <div class="faculty-photo-plate">
+              <div class="faculty-photo-shield" aria-hidden="true">
+                <img src="assets/logo-team.svg" alt="" />
+              </div>
+              <div class="faculty-photo-info">
+                <p class="faculty-photo-name">Matheus Castiglioni</p>
+                <p class="faculty-photo-role">Professor Principal · Coordenador</p>
+              </div>
+            </div>
+            <div class="faculty-photo-bio">
+              <div class="faculty-photo-bio-content">
+                <p class="faculty-photo-bio-text">Google Developer Expert com experiência em sistemas de IA em produção. Referência nacional em arquitetura de agentes autônomos, RAG e engenharia AI-first. Coordena toda a grade curricular da Pós.</p>
+                <span class="faculty-photo-tag">Google Developer Expert</span>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PROFILE — fit/skip ledger ===== -->
+  <section class="profile" id="perfil">
+    <div class="section-inner">
+      <div class="profile-header">
+        <div>
+          <span class="pain-eyebrow anim">Perfil do aluno</span>
+          <h2 class="section-title anim" style="--anim-delay: 100ms;">Esta Pós é <span class="grad">pra você?</span></h2>
+        </div>
+        <div class="profile-header-meta">
+          <p class="profile-header-desc anim" style="--anim-delay: 200ms;">Sem rodeios. Quatro filtros pra você decidir agora se vale o seu tempo — ou se a gente só estaria perdendo o seu.</p>
+        </div>
+      </div>
+
+      <div class="profile-cols">
+        <div class="profile-col profile-col--fit">
+          <span class="profile-col-tag anim" style="--anim-delay: 0ms;"><span class="glyph" aria-hidden="true">+</span>FIT · É pra você</span>
+          <h3 class="profile-col-title anim" style="--anim-delay: 60ms;">Você está pronto se…</h3>
+          <ol class="profile-list">
+            <li class="anim" style="--anim-delay: 120ms;">
+              <svg class="profile-mark" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.5 L6.5 12 L13 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/></svg>
+              <span>Você já programa e quer se manter competitivo num mercado que exige IA.</span>
+            </li>
+            <li class="anim" style="--anim-delay: 200ms;">
+              <svg class="profile-mark" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.5 L6.5 12 L13 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/></svg>
+              <span>Quer construir agentes, RAG e automações que as maiores empresas pagam caro pra ter.</span>
+            </li>
+            <li class="anim" style="--anim-delay: 280ms;">
+              <svg class="profile-mark" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.5 L6.5 12 L13 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/></svg>
+              <span>Mira vagas internacionais e quer chegar lá com projeto real no portfólio.</span>
+            </li>
+            <li class="anim" style="--anim-delay: 360ms;">
+              <svg class="profile-mark" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.5 L6.5 12 L13 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/></svg>
+              <span>Entende que chancela de uma universidade global vale mais do que um certificado local.</span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="profile-col profile-col--skip">
+          <span class="profile-col-tag anim" style="--anim-delay: 80ms;"><span class="glyph" aria-hidden="true">–</span>SKIP · Pula essa</span>
+          <h3 class="profile-col-title anim" style="--anim-delay: 140ms;">Não é a hora se…</h3>
+          <ol class="profile-list">
+            <li class="anim" style="--anim-delay: 200ms;">
+              <svg class="profile-mark" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 4 L12 12 M12 4 L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg>
+              <span>Você nunca programou e está procurando um curso pra aprender a codar do zero.</span>
+            </li>
+            <li class="anim" style="--anim-delay: 280ms;">
+              <svg class="profile-mark" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 4 L12 12 M12 4 L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg>
+              <span>Está satisfeito exatamente onde está e não quer crescer na carreira agora.</span>
+            </li>
+            <li class="anim" style="--anim-delay: 360ms;">
+              <svg class="profile-mark" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 4 L12 12 M12 4 L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg>
+              <span>Procura conteúdo de catálogo pra "dar uma olhada" sem se comprometer com projeto real.</span>
+            </li>
+            <li class="anim" style="--anim-delay: 440ms;">
+              <svg class="profile-mark" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 4 L12 12 M12 4 L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg>
+              <span>Não tem interesse em vagas internacionais nem em pressionar o próprio salário pra cima.</span>
+            </li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="profile-cta-row anim" style="--anim-delay: 200ms;">
+        <span class="profile-cta-note"><span class="dot"></span>Bolsas limitadas · 2026.1</span>
+        <a href="#cadastrar" class="cta-primary">
+          <span>Quero tentar uma bolsa</span>
+          <span class="cta-arrow" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PROGRAMAS 2026.1 — Catálogo de cursos (intentionally placed between perfil and portfolio) ===== -->
+  <section class="programas" id="programas" aria-label="Programas 2026.1">
+    <div class="section-inner">
+      <div class="programas-header">
+        <div>
+          <span class="pain-eyebrow anim">Ementa</span>
+          <h2 class="section-title anim" style="--anim-delay: 100ms;">12 módulos. <span class="grad">360 horas.</span><br>Um portfólio real</h2>
+        </div>
+        <p class="programas-header-desc anim" style="--anim-delay: 200ms;">Cada módulo termina com um projeto prático. Você não sai com um certificado em mãos — você sai com <strong>12 soluções reais construídas por você.</strong></p>
+      </div>
+
+      <div class="programas-grid">
+        <div class="programa-card anim" style="--anim-delay: 0ms;">
+          <div class="programa-top">
+            <span class="programa-code">[01]</span>
+          </div>
+          <span class="programa-level">Módulo 01</span>
+          <h3 class="programa-title">Fundamentos de IA</h3>
+          <p class="programa-desc">Fundamentos de LLMs, decisão estratégica e trade-offs empresariais de adoção de IA.</p>
+          <div class="programa-foot">            <div class="programa-tags">
+              <span class="programa-tag">LLMs</span>
+              <span class="programa-tag">Strategy</span>
+              <span class="programa-tag">Trade-offs</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="programa-card anim" style="--anim-delay: 80ms;">
+          <div class="programa-top">
+            <span class="programa-code">[02]</span>
+          </div>
+          <span class="programa-level">Módulo 02</span>
+          <h3 class="programa-title">Fundamentos de LLMs</h3>
+          <p class="programa-desc">Engenharia de prompts como camada de programação — estrutura, controle e sistemas baseados em linguagem.</p>
+          <div class="programa-foot">            <div class="programa-tags">
+              <span class="programa-tag">Prompts</span>
+              <span class="programa-tag">LLMs</span>
+              <span class="programa-tag">Control</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="programa-card anim" style="--anim-delay: 160ms;">
+          <div class="programa-top">
+            <span class="programa-code">[03]</span>
+          </div>
+          <span class="programa-level">Módulo 03</span>
+          <h3 class="programa-title">Engenharia de Prompts</h3>
+          <p class="programa-desc">Memória, contexto persistente e estruturação de conhecimento para sistemas de IA.</p>
+          <div class="programa-foot">            <div class="programa-tags">
+              <span class="programa-tag">Memory</span>
+              <span class="programa-tag">Knowledge</span>
+              <span class="programa-tag">Context</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="programa-card anim" style="--anim-delay: 240ms;">
+          <div class="programa-top">
+            <span class="programa-code">[04]</span>
+          </div>
+          <span class="programa-level">Módulo 04</span>
+          <h3 class="programa-title">Engenharia de Software com IA</h3>
+          <p class="programa-desc">Desenvolvimento AI-first, co-pilotagem de código, testes inteligentes e refatoração com IA.</p>
+          <div class="programa-foot">            <div class="programa-tags">
+              <span class="programa-tag">AI-first</span>
+              <span class="programa-tag">Co-pilot</span>
+              <span class="programa-tag">Testing</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="programa-card anim" style="--anim-delay: 320ms;">
+          <div class="programa-top">
+            <span class="programa-code">[05]</span>
+          </div>
+          <span class="programa-level">Módulo 05</span>
+          <h3 class="programa-title">Arquitetura de Sistema com IA</h3>
+          <p class="programa-desc">Padrões arquiteturais para sistemas AI-first, decisões de engenharia e design para escala.</p>
+          <div class="programa-foot">            <div class="programa-tags">
+              <span class="programa-tag">Architecture</span>
+              <span class="programa-tag">Design</span>
+              <span class="programa-tag">Scale</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="programa-card anim" style="--anim-delay: 400ms;">
+          <div class="programa-top">
+            <span class="programa-code">[06]</span>
+          </div>
+          <span class="programa-level">Módulo 06</span>
+          <h3 class="programa-title">Produto e UX com IA</h3>
+          <p class="programa-desc">Validação, estratégia e construção de produtos AI-first — do problema ao MVP funcional.</p>
+          <div class="programa-foot">            <div class="programa-tags">
+              <span class="programa-tag">Product</span>
+              <span class="programa-tag">MVP</span>
+              <span class="programa-tag">Strategy</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="programa-card anim" style="--anim-delay: 0ms;">
+          <div class="programa-top">
+            <span class="programa-code">[07]</span>
+          </div>
+          <span class="programa-level">Módulo 07</span>
+          <h3 class="programa-title">Deploy & Operações de IA</h3>
+          <p class="programa-desc">Automação inteligente, orquestração de processos e sistemas operacionais com IA.</p>
+          <div class="programa-foot">            <div class="programa-tags">
+              <span class="programa-tag">Automation</span>
+              <span class="programa-tag">Workflows</span>
+              <span class="programa-tag">Orchestration</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="programa-card anim" style="--anim-delay: 80ms;">
+          <div class="programa-top">
+            <span class="programa-code">[08]</span>
+          </div>
+          <span class="programa-level">Módulo 08</span>
+          <h3 class="programa-title">Agentes & Multi-Agentes</h3>
+          <p class="programa-desc">Agentes inteligentes, sistemas autônomos e orquestração multi-agente com frameworks avançados.</p>
+          <div class="programa-foot">            <div class="programa-tags">
+              <span class="programa-tag">Agents</span>
+              <span class="programa-tag">Multi-Agent</span>
+              <span class="programa-tag">Autonomy</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="programa-card anim" style="--anim-delay: 160ms;">
+          <div class="programa-top">
+            <span class="programa-code">[09]</span>
+          </div>
+          <span class="programa-level">Módulo 09</span>
+          <h3 class="programa-title">Sistemas RAG</h3>
+          <p class="programa-desc">Embeddings, busca semântica, pipelines de dados e sistemas RAG enterprise em produção.</p>
+          <div class="programa-foot">            <div class="programa-tags">
+              <span class="programa-tag">RAG</span>
+              <span class="programa-tag">Vector DB</span>
+              <span class="programa-tag">Embeddings</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="programa-card anim" style="--anim-delay: 240ms;">
+          <div class="programa-top">
+            <span class="programa-code">[10]</span>
+          </div>
+          <span class="programa-level">Módulo 10</span>
+          <h3 class="programa-title">Sistemas Avançados de IA</h3>
+          <p class="programa-desc">Deploy, operação, monitoramento e avaliação de sistemas de IA em produção real.</p>
+          <div class="programa-foot">            <div class="programa-tags">
+              <span class="programa-tag">DevOps</span>
+              <span class="programa-tag">CI/CD</span>
+              <span class="programa-tag">Monitoring</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="programa-card anim" style="--anim-delay: 320ms;">
+          <div class="programa-top">
+            <span class="programa-code">[11]</span>
+          </div>
+          <span class="programa-level">Módulo 11</span>
+          <h3 class="programa-title">Governança & Riscos de IA</h3>
+          <p class="programa-desc">Segurança, ética, conformidade regulatória e governança de sistemas de IA corporativos.</p>
+          <div class="programa-foot">            <div class="programa-tags">
+              <span class="programa-tag">Governance</span>
+              <span class="programa-tag">Risk</span>
+              <span class="programa-tag">Compliance</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="programa-card anim" style="--anim-delay: 400ms;">
+          <div class="programa-top">
+            <span class="programa-code">[12]</span>
+          </div>
+          <span class="programa-level">Módulo 12</span>
+          <h3 class="programa-title">Capstone: Projeto Final</h3>
+          <p class="programa-desc">Sistema completo AI-first do zero — arquitetura, agentes, RAG e deploy em produção.</p>
+          <div class="programa-foot">            <div class="programa-tags">
+              <span class="programa-tag">Architecture</span>
+              <span class="programa-tag">Agents</span>
+              <span class="programa-tag">RAG</span>
+              <span class="programa-tag">Deploy</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== PORTFOLIO — 3 projetos em destaque (estilo brutalista) ===== -->
+  <section class="portfolio" id="portfolio">
+    <div class="section-inner">
+      <div class="portfolio-header">
+        <div>
+          <span class="pain-eyebrow anim">O que você vai construir</span>
+          <h2 class="section-title anim" style="--anim-delay: 100ms;">Você sai com <span class="grad">12 projetos reais</span><br>— e um diploma global.</h2>
+        </div>
+        <p class="portfolio-header-desc anim" style="--anim-delay: 200ms;"><strong>Todos os 12 módulos têm um projeto prático</strong> — cada um resolve um problema real de empresa, não exercícios ou tutoriais. Os 3 mais impactantes:</p>
+      </div>
+
+      <div class="portfolio-grid">
+        <div class="portfolio-side">
+          <article class="pf-card anim" style="--anim-delay: 120ms;">
+            <span class="pf-card-num">// Projeto 01 — Estratégia</span>
+            <h3 class="pf-card-title">AI Capability Assessment</h3>
+            <p class="pf-card-desc">Recomendação executiva real de adoção de IA para uma empresa — com análise de trade-offs, matriz de risco e decisão técnica. Entregável que C-levels usam para tomar decisões de milhões.</p>
+            <div class="pf-card-tags">
+              <span class="pf-tag">Strategy</span>
+              <span class="pf-tag">Trade-offs</span>
+            </div>
+          </article>
+
+          <article class="pf-card anim" style="--anim-delay: 240ms;">
+            <span class="pf-card-num">// Projeto 03 — Sistemas</span>
+            <h3 class="pf-card-title">Context Engineering Platform</h3>
+            <p class="pf-card-desc">Plataforma de contexto empresarial real — gestão de memória de longo prazo, knowledge base estruturada e injeção de contexto dinâmico. Infra que equipes de AI Engineering nos EUA constroem.</p>
+            <div class="pf-card-tags">
+              <span class="pf-tag">Memory</span>
+              <span class="pf-tag">Vector DB</span>
+            </div>
+          </article>
+        </div>
+
+        <article class="pf-card pf-card--featured anim" style="--anim-delay: 0ms;">
+          <img src="assets/capstone.jpg" alt="" class="pf-card-image" aria-hidden="true" />
+          <span class="pf-card-num">// Projeto 12 — O projeto da sua carreira</span>
+          <div class="pf-card-headline">
+            <h3 class="pf-card-title">AI-First System Completo</h3>
+            <span class="pf-card-tag">Capstone</span>
+          </div>
+          <p class="pf-card-desc">Integra tudo: arquitetura AI-first, agentes autônomos, RAG, automação, DevOps e deploy em produção. Apresentado para banca. É esse projeto que vai no seu LinkedIn, no seu GitHub e na entrevista da vaga internacional — com a chancela ESIC no currículo do lado.</p>
+          <div class="pf-card-tags">
+            <span class="pf-tag">Architecture</span>
+            <span class="pf-tag">Agents</span>
+            <span class="pf-tag">RAG</span>
+            <span class="pf-tag">DevOps</span>
+            <span class="pf-tag">Deploy</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <img src="assets/head-white.svg" alt="" class="market-head-banner" aria-hidden="true" />
+
+  <!-- ===== MARKET — proof cards ===== -->
+  <section class="market" id="mercado">
+    <div class="section-inner">
+      <span class="pain-eyebrow anim">O mercado fala</span>
+      <h2 class="section-title anim" style="--anim-delay: 100ms;">Quem não domina IA está sendo <span class="grad">eliminado.</span> Os dados não mentem.</h2>
+      <p class="section-sub anim" style="--anim-delay: 200ms;">Gartner, WEF e LinkedIn publicaram os mesmos dados em 2024–2025: <strong>a demanda por AI Engineers explodiu e a oferta de profissionais qualificados não acompanhou.</strong></p>
+
+      <div class="market-grid">
+        <article class="market-card market-card--pistache anim" style="--anim-delay: 0ms;">
+          <div class="market-card-top">
+            <span class="market-source">McKinsey · Jan 2026</span>
+            <h3 class="market-title">Empresas em escassez crítica</h3>
+            <p class="market-desc">9 em cada 10 empresas globais planejam contratar mais AI Engineers nos próximos 12 meses.</p>
+          </div>
+          <div class="market-viz">
+            <span class="market-viz-label">Escassez global</span>
+            <p class="market-viz-big">70%</p>
+            <div class="market-viz-bar" aria-hidden="true">
+              <span class="market-viz-bar-fill" style="width: 70%"></span>
+            </div>
+          </div>
+        </article>
+
+        <article class="market-card market-card--green anim" style="--anim-delay: 120ms;">
+          <div class="market-card-top">
+            <span class="market-source">WEF · 2026</span>
+            <h3 class="market-title">Mercado em expansão</h3>
+            <p class="market-desc">AI Engineer no 1º lugar do ranking global de cargos em maior crescimento pelo 2º ano consecutivo.</p>
+          </div>
+          <div class="market-viz">
+            <span class="market-viz-label">Vagas previstas até 2030</span>
+            <p class="market-viz-big">22M</p>
+            <span class="market-viz-trend">
+              <svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 11L11 3M11 3H5M11 3V9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Tendência de alta
+            </span>
+          </div>
+        </article>
+
+        <article class="market-card market-card--black anim" style="--anim-delay: 240ms;">
+          <div class="market-card-top">
+            <span class="market-source">Glassdoor · Mar 2026</span>
+            <h3 class="market-title">Salário em alta</h3>
+            <p class="market-desc">AI Engineers com experiência em agentes e RAG ganham mais — vagas remotas internacionais cresceram 3× em 12 meses.</p>
+          </div>
+          <div class="market-viz">
+            <span class="market-viz-label">Salário médio anual</span>
+            <ul class="market-viz-rows">
+              <li><span class="market-viz-row-label">EUA</span><span class="market-viz-row-value">USD 185k</span></li>
+              <li><span class="market-viz-row-label">Brasil</span><span class="market-viz-row-value">R$ 35k+/mês</span></li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <img src="assets/lines.svg" alt="" class="market-faq-divider" aria-hidden="true" />
+
+  <!-- ===== FAQ — 2 colunas: título à esquerda, accordions à direita ===== -->
+  <section class="faq" id="faq">
+    <div class="section-inner">
+      <div class="faq-grid">
+        <div class="faq-head">
+          <div class="faq-head-top">
+            <span class="pain-eyebrow anim">FAQ</span>
+            <h2 class="section-title anim" style="--anim-delay: 100ms;">Tire suas dúvidas<br><span class="grad">antes de começar</span></h2>
+            <p class="faq-head-desc anim" style="--anim-delay: 200ms;">Reunimos as perguntas mais comuns sobre a Pós. Se a sua não estiver aqui, fale com a gente — respondemos no mesmo dia.</p>
+            <a href="#cadastrar" class="cta-primary anim" style="--anim-delay: 300ms;">
+              <span>Quero tentar uma bolsa</span>
+              <span class="cta-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </a>
+          </div>
+
+          <div class="faq-contacts anim" style="--anim-delay: 400ms;">
+            <a href="https://wa.me/" class="faq-contact" aria-label="Falar no WhatsApp">
+              <span class="faq-contact-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19.05 4.91A9.82 9.82 0 0 0 12.04 2c-5.45 0-9.88 4.43-9.88 9.88 0 1.74.46 3.43 1.32 4.92L2 22l5.34-1.4a9.86 9.86 0 0 0 4.7 1.2c5.45 0 9.88-4.43 9.88-9.88 0-2.64-1.03-5.13-2.87-7.01zM12.04 20.07a8.21 8.21 0 0 1-4.18-1.14l-.3-.18-3.13.82.83-3.05-.2-.31a8.18 8.18 0 0 1-1.26-4.33c0-4.54 3.69-8.22 8.24-8.22 2.2 0 4.27.86 5.83 2.42a8.19 8.19 0 0 1 2.41 5.83c0 4.54-3.69 8.22-8.24 8.22zm4.5-6.16c-.25-.13-1.46-.72-1.69-.8-.23-.08-.39-.13-.56.13-.16.25-.64.8-.79.97-.14.16-.29.18-.54.06-.25-.13-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.39-1.72-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.43.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.13-.56-1.34-.77-1.84-.2-.49-.41-.42-.56-.42-.14-.01-.31-.01-.48-.01-.16 0-.43.06-.66.31-.23.25-.86.84-.86 2.05 0 1.21.88 2.38 1 2.55.13.16 1.74 2.66 4.21 3.73.59.25 1.05.4 1.41.51.59.19 1.13.16 1.55.1.47-.07 1.46-.59 1.66-1.17.21-.57.21-1.07.14-1.17-.06-.1-.22-.16-.47-.28z"/>
+                </svg>
+              </span>
+              <span class="faq-contact-text">
+                <span class="faq-contact-label">WhatsApp<svg class="faq-contact-arrow" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 11L11 3M11 3H5M11 3V9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="faq-contact-value">Resposta em até 1h</span>
+              </span>
+            </a>
+            <a href="mailto:contato@coders.university" class="faq-contact" aria-label="Enviar email">
+              <span class="faq-contact-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="5" width="18" height="14" rx="2"/>
+                  <path d="M3 7l9 6 9-6"/>
+                </svg>
+              </span>
+              <span class="faq-contact-text">
+                <span class="faq-contact-label">Email<svg class="faq-contact-arrow" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 11L11 3M11 3H5M11 3V9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="faq-contact-value">contato@coders.university</span>
+              </span>
+            </a>
+          </div>
+        </div>
+
+        <div class="faq-col">
+          <div class="faq-item anim" data-toggle="faq" style="--anim-delay: 0ms;">
+            <div class="faq-q">Como garanto minha vaga?<span class="faq-icon">+</span></div>
+            <div class="faq-a"><div class="faq-a-inner">Clique em qualquer botão desta página. Nossa equipe entra em contato pelo WhatsApp para confirmar sua inscrição, verificar elegibilidade a bolsas e tirar todas as dúvidas.</div></div>
+          </div>
+          <div class="faq-item anim" data-toggle="faq" style="--anim-delay: 60ms;">
+            <div class="faq-q">As aulas são ao vivo ou gravadas?<span class="faq-icon">+</span></div>
+            <div class="faq-a"><div class="faq-a-inner">Todas as aulas são gravadas e ficam disponíveis na plataforma para assistir quando quiser. Além disso, há plantões de dúvidas semanais ao vivo com os professores para você tirar dúvidas sobre projetos e módulos em tempo real.</div></div>
+          </div>
+          <div class="faq-item anim" data-toggle="faq" style="--anim-delay: 120ms;">
+            <div class="faq-q">Precisa ter graduação?<span class="faq-icon">+</span></div>
+            <div class="faq-a"><div class="faq-a-inner">Não necessariamente. Quem tem graduação recebe diploma de Pós-Graduado com chancela ESIC Internacional. Quem não tem recebe diploma de Curso de Extensão Universitária — ambos com reconhecimento internacional. O único requisito obrigatório é saber programar.</div></div>
+          </div>
+          <div class="faq-item anim" data-toggle="faq" style="--anim-delay: 180ms;">
+            <div class="faq-q">Cobre ciência de dados também?<span class="faq-icon">+</span></div>
+            <div class="faq-a"><div class="faq-a-inner">Sim. O módulo de RAG Systems & Data Engineering cobre pipelines de dados, embeddings e análise necessários para AI Engineers. Profissionais de dados aprenderão a integrar IA ao seu stack atual com profundidade.</div></div>
+          </div>
+          <div class="faq-item anim" data-toggle="faq" style="--anim-delay: 240ms;">
+            <div class="faq-q">Funciona pra quem não sabe nada de IA?<span class="faq-icon">+</span></div>
+            <div class="faq-a"><div class="faq-a-inner">Sim — desde que você saiba programar. O Módulo 1 foi desenhado para nivelar quem tem base técnica mas pouca experiência com IA. A progressão garante que você chegue ao nível avançado mesmo partindo do zero em IA.</div></div>
+          </div>
+          <div class="faq-item anim" data-toggle="faq" style="--anim-delay: 300ms;">
+            <div class="faq-q">Qual é a duração e carga horária?<span class="faq-icon">+</span></div>
+            <div class="faq-a"><div class="faq-a-inner">12 meses, 360 horas distribuídas em 12 módulos práticos. Sem TCC ao final.</div></div>
+          </div>
+          <div class="faq-item anim" data-toggle="faq" style="--anim-delay: 360ms;">
+            <div class="faq-q">Quais as formas de pagamento?<span class="faq-icon">+</span></div>
+            <div class="faq-a"><div class="faq-a-inner">Parcelamos em até 12x no cartão. PIX à vista com condições especiais. Fale com nossa equipe para verificar disponibilidade de bolsas para a primeira turma.</div></div>
+          </div>
+          <div class="faq-item anim" data-toggle="faq" style="--anim-delay: 420ms;">
+            <div class="faq-q">Como funciona a emissão do diploma?<span class="faq-icon">+</span></div>
+            <div class="faq-a"><div class="faq-a-inner">Ao concluir todos os módulos com aproveitamento satisfatório você recebe o diploma físico e digital com chancela ESIC Internacional — reconhecido em mais de 30 países e válido para vagas globais.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Marquee dentro da FAQ — bg branco continua, texto preto -->
+    <div class="cta-marquee" aria-hidden="true">
+      <div class="cta-marquee-track">
+        <span class="cta-marquee-item">Avaliação gratuita</span>
+        <img src="assets/coders-ast.svg" alt="" class="cta-marquee-dot" aria-hidden="true" />
+        <span class="cta-marquee-item">ESIC Internacional</span>
+        <img src="assets/coders-ast.svg" alt="" class="cta-marquee-dot" aria-hidden="true" />
+        <span class="cta-marquee-item">12 projetos reais</span>
+        <img src="assets/coders-ast.svg" alt="" class="cta-marquee-dot" aria-hidden="true" />
+        <span class="cta-marquee-item">Sem TCC</span>
+        <img src="assets/coders-ast.svg" alt="" class="cta-marquee-dot" aria-hidden="true" />
+        <span class="cta-marquee-item">Bolsas limitadas</span>
+        <img src="assets/coders-ast.svg" alt="" class="cta-marquee-dot" aria-hidden="true" />
+        <span class="cta-marquee-item">Avaliação gratuita</span>
+        <img src="assets/coders-ast.svg" alt="" class="cta-marquee-dot" aria-hidden="true" />
+        <span class="cta-marquee-item">ESIC Internacional</span>
+        <img src="assets/coders-ast.svg" alt="" class="cta-marquee-dot" aria-hidden="true" />
+        <span class="cta-marquee-item">12 projetos reais</span>
+        <img src="assets/coders-ast.svg" alt="" class="cta-marquee-dot" aria-hidden="true" />
+        <span class="cta-marquee-item">Sem TCC</span>
+        <img src="assets/coders-ast.svg" alt="" class="cta-marquee-dot" aria-hidden="true" />
+        <span class="cta-marquee-item">Bolsas limitadas</span>
+        <img src="assets/coders-ast.svg" alt="" class="cta-marquee-dot" aria-hidden="true" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CLOSING SHELL — Final CTA + Footer integrados sobre imagem ===== -->
+  <section class="closing-shell" aria-label="Encerramento">
+    <div class="closing-bg" aria-hidden="true"></div>
+    <img src="upside-white.svg" alt="" class="closing-corner-tr" aria-hidden="true" />
+
+  <!-- ===== FINAL CTA — 2 colunas: manifesto + ação ===== -->
+  <section class="final-cta" id="cadastrar">
+    <div class="final-cta-inner">
+      <div class="final-cta-col final-cta-col--text">
+        <div class="final-cta-top">
+          <div class="final-cta-scarcity anim" style="--anim-delay: 0ms;">
+            <span class="pulse" aria-hidden="true"></span>
+            <span>12 vagas de bolsa restantes · Encerra em 7 dias</span>
+          </div>
+          <h1 class="final-cta-title anim" style="--anim-delay: 100ms;">O mercado <span class="grad">não vai esperar</span> por você. A janela é <span class="grad">agora.</span></h1>
+        </div>
+
+        <div class="final-cta-bottom">
+          <p class="final-cta-sub anim" style="--anim-delay: 200ms;">Clique no botão, responda algumas perguntas sobre seu perfil e nossa equipe avalia se você tem direito a uma <strong>bolsa parcial</strong> para a primeira turma. Vagas de bolsa são <strong>limitadas</strong>.</p>
+          <div class="anim" style="--anim-delay: 300ms;">
+            <a href="#cadastrar" class="cta-primary">
+              <span>Quero tentar uma bolsa</span>
+              <span class="cta-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer" id="contato">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-col footer-brand">
+          <a href="#" class="footer-logo"><img src="assets/logo-coders-university.png" alt="Coders University" /></a>
+          <p class="footer-tagline">Pós-Graduação em Engenharia de IA com chancela ESIC Internacional. Forme-se para o mercado global.</p>
+          <div class="footer-social">
+            <a href="#" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor"/></svg>
+            </a>
+            <a href="#" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14zM8 17V10H6v7h2zm-1-8.5a1.2 1.2 0 1 0 0-2.4 1.2 1.2 0 0 0 0 2.4zM18 17v-3.7c0-2-1.1-3-2.6-3-1.2 0-1.7.7-2 1.2V10h-2v7h2v-3.9c0-1 .2-1.7 1.4-1.7 1.2 0 1.2 1.1 1.2 1.7V17h2z"/></svg>
+            </a>
+            <a href="#" aria-label="GitHub">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2A10 10 0 0 0 8.84 21.5c.5.09.68-.22.68-.48 0-.24-.01-.87-.01-1.7-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85 0 1.34-.01 2.42-.01 2.75 0 .27.18.58.69.48A10 10 0 0 0 12 2z"/></svg>
+            </a>
+            <a href="#" aria-label="WhatsApp">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.05 4.91A9.82 9.82 0 0 0 12.04 2c-5.45 0-9.88 4.43-9.88 9.88 0 1.74.46 3.43 1.32 4.92L2 22l5.34-1.4a9.86 9.86 0 0 0 4.7 1.2c5.45 0 9.88-4.43 9.88-9.88 0-2.64-1.03-5.13-2.87-7.01zM12.04 20.07a8.21 8.21 0 0 1-4.18-1.14l-.3-.18-3.13.82.83-3.05-.2-.31a8.18 8.18 0 0 1-1.26-4.33c0-4.54 3.69-8.22 8.24-8.22 2.2 0 4.27.86 5.83 2.42a8.19 8.19 0 0 1 2.41 5.83c0 4.54-3.69 8.22-8.24 8.22zm4.5-6.16c-.25-.13-1.46-.72-1.69-.8-.23-.08-.39-.13-.56.13-.16.25-.64.8-.79.97-.14.16-.29.18-.54.06-.25-.13-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.39-1.72-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.43.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.13-.56-1.34-.77-1.84-.2-.49-.41-.42-.56-.42-.14-.01-.31-.01-.48-.01-.16 0-.43.06-.66.31-.23.25-.86.84-.86 2.05 0 1.21.88 2.38 1 2.55.13.16 1.74 2.66 4.21 3.73.59.25 1.05.4 1.41.51.59.19 1.13.16 1.55.1.47-.07 1.46-.59 1.66-1.17.21-.57.21-1.07.14-1.17-.06-.1-.22-.16-.47-.28z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-divider" aria-hidden="true"></div>
+
+        <div class="footer-col">
+          <h5>Programa</h5>
+          <ul class="footer-links">
+            <li><a href="#perfil">Perfil do aluno</a></li>
+            <li><a href="#faculty">Faculty</a></li>
+            <li><a href="#programas">Programas</a></li>
+            <li><a href="#diferenciais">Diferenciais ESIC</a></li>
+            <li><a href="#mercado">Dados de mercado</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-divider" aria-hidden="true"></div>
+
+        <div class="footer-col">
+          <h5>Suporte</h5>
+          <ul class="footer-links">
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#cadastrar">Quero uma bolsa</a></li>
+            <li><a href="#">Falar no WhatsApp</a></li>
+            <li><a href="mailto:contato@coders.university">contato@coders.university</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-bottom-left">
+          <span class="footer-copy">© 2026 Coders University</span>
+          <span class="footer-esic-badge">Em parceria com ESIC Internacional · Madrid</span>
+        </div>
+        <div class="footer-legal">
+          <a href="#">Privacidade</a>
+          <a href="#">Termos</a>
+          <a href="#">Cookies</a>
+        </div>
+      </div>
+
+      <p class="footer-disc">Este site não é afiliado ao Facebook, Google ou qualquer entidade ligada a eles. Resultados individuais podem variar. Informações salariais baseadas em dados públicos de mercado — representam médias, não garantias individuais.</p>
+    </div>
+  </footer>
+
+  </section><!-- /.closing-shell -->
+
+  <script>
+    // Entry animations via IntersectionObserver
+    (function () {
+      const targets = document.querySelectorAll('.anim');
+      if (!('IntersectionObserver' in window) || !targets.length) {
+        targets.forEach((el) => el.classList.add('is-in'));
+        return;
+      }
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-in');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+      targets.forEach((el) => io.observe(el));
+    })();
+
+    // Navbar scroll-spy — destaca o link da seção visível
+    (function () {
+      const links = Array.from(document.querySelectorAll('.nav-links a[href^="#"]'));
+      if (!links.length || !('IntersectionObserver' in window)) return;
+      const map = new Map();
+      links.forEach((link) => {
+        const id = link.getAttribute('href').slice(1);
+        const sec = id ? document.getElementById(id) : null;
+        if (sec) map.set(sec, link);
+      });
+      if (map.size === 0) return;
+      let activeLink = null;
+      const setActive = (link) => {
+        if (link === activeLink) return;
+        if (activeLink) activeLink.classList.remove('is-active');
+        if (link) link.classList.add('is-active');
+        activeLink = link;
+      };
+      const visible = new Set();
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) visible.add(entry.target);
+          else visible.delete(entry.target);
+        });
+        // Pick the topmost visible section in document order
+        let chosen = null;
+        let chosenTop = Infinity;
+        visible.forEach((sec) => {
+          const top = sec.getBoundingClientRect().top;
+          if (top < chosenTop) { chosenTop = top; chosen = sec; }
+        });
+        if (chosen) setActive(map.get(chosen));
+      }, { rootMargin: '-40% 0px -50% 0px', threshold: 0 });
+      map.forEach((_, sec) => io.observe(sec));
+    })();
+
+    // Accordions (modules + FAQ) — accordion-style, abre 1 por vez por grupo
+    (function () {
+      function bindAccordion(selector) {
+        const items = document.querySelectorAll(selector);
+        items.forEach((item) => {
+          const header = item.querySelector('.module-card, .faq-q');
+          if (!header) return;
+          header.addEventListener('click', () => {
+            const wasOpen = item.classList.contains('is-open');
+            items.forEach((i) => i.classList.remove('is-open'));
+            if (!wasOpen) item.classList.add('is-open');
+          });
+        });
+      }
+      bindAccordion('[data-toggle="module"]');
+      bindAccordion('[data-toggle="faq"]');
+    })();
+
+// Faculty cards — bio expand on hover (GSAP)
+    (function () {
+      function init() {
+        if (!window.gsap) {
+          window.addEventListener('load', init, { once: true });
+          return;
+        }
+        document.querySelectorAll('.faculty-photo-card').forEach((card) => {
+          const bio = card.querySelector('.faculty-photo-bio');
+          if (!bio) return;
+          let tween;
+          const open = () => {
+            if (tween) tween.kill();
+            tween = gsap.to(bio, { height: 'auto', duration: 0.9, ease: 'expo.out' });
+          };
+          const close = () => {
+            if (tween) tween.kill();
+            tween = gsap.to(bio, { height: 0, duration: 0.7, ease: 'expo.inOut' });
+          };
+          card.addEventListener('mouseenter', open);
+          card.addEventListener('mouseleave', close);
+          card.addEventListener('focusin', open);
+          card.addEventListener('focusout', (e) => {
+            if (!card.contains(e.relatedTarget)) close();
+          });
+        });
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+    })();
+
+    // Sticky bar — aparece após 600px de scroll, esconde no fim
+    (function () {
+      const bar = document.getElementById('stickyBar');
+      const finalCta = document.getElementById('cadastrar');
+      if (!bar) return;
+      function onScroll() {
+        const y = window.scrollY;
+        const showFromTop = y > 600;
+        // Esconde quando a final-cta está visível na viewport
+        let nearFinal = false;
+        if (finalCta) {
+          const rect = finalCta.getBoundingClientRect();
+          nearFinal = rect.top < window.innerHeight * 0.85;
+        }
+        bar.classList.toggle('is-show', showFromTop && !nearFinal);
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+  </script>
+
+  <script type="module">
+    import { createGradientBlinds } from './js/gradient-blinds.js';
+
+    createGradientBlinds(document.getElementById('bg-blinds'), {
+      gradientColors: ['#0a3d1f', '#44d62c', '#9dffc6'],
+      angle: 30,
+      noise: 0.25,
+      blindCount: 12,
+      blindMinWidth: 50,
+      spotlightRadius: 0.5,
+      spotlightSoftness: 1,
+      spotlightOpacity: 1,
+      mouseDampening: 0.15,
+      distortAmount: 0,
+      shineDirection: 'left',
+      mixBlendMode: 'lighten',
+    });
+  </script>
+</body>
+</html>
