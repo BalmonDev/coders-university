@@ -2422,10 +2422,13 @@
       content: "";
       position: absolute;
       inset: 0;
-      background:
-        radial-gradient(ellipse 45% 35% at 100% 0%, rgba(68,214,44,0.06), transparent 70%),
-        radial-gradient(ellipse 45% 35% at 0% 100%, rgba(72,248,149,0.05), transparent 70%);
+      background: linear-gradient(180deg,
+        rgba(0,0,0,0.78) 0%,
+        rgba(0,0,0,0.55) 18%,
+        rgba(0,0,0,0.25) 38%,
+        rgba(0,0,0,0) 60%);
       pointer-events: none;
+      z-index: 0;
     }
     .programas .section-inner { position: relative; z-index: 1; }
     .programas-header {
