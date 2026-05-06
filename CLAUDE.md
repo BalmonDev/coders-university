@@ -15,15 +15,17 @@ A landing usa **NexaText** (Adobe Fonts) com **Inter** + system fonts como fallb
   ```
   O truque `media="print"` + `onload` carrega o CSS sem bloquear o primeiro paint; o `<noscript>` é fallback se JS estiver desligado.
 
-- O nome real declarado pelo kit é **`"nexa-text"`** (kebab-case). Em todo o CSS use sempre:
+- **Snippet padrão** (use sempre este formato em qualquer lugar que precisar de nexa-text):
   ```css
-  font-family: "nexa-text", "Inter", sans-serif;
+  font-family: "nexa-text", sans-serif;
+  font-weight: 500;
+  font-style: normal;
   ```
-  **Nunca** use `"NexaText"` ou `"Nexa Text"` — não bate com o `@font-face` do Adobe e cai pro fallback.
+  - Nome real declarado pelo kit: `"nexa-text"` (kebab-case). **Nunca** use `"NexaText"` ou `"Nexa Text"` — não bate com o `@font-face` do Adobe.
+  - Fallback: só `sans-serif`. Não usar `"Inter"` no meio (Inter não está sendo carregada, então é morta).
+  - Peso: `500` único peso padrão da landing.
 
 - **Performance/swap**: pra evitar FOIT (texto invisível enquanto baixa), o kit precisa estar configurado com `font-display: swap` no painel da Adobe Fonts (https://fonts.adobe.com → seu kit → settings → "Default font-display value" = swap). Isso é configuração externa — não tem como forçar via CSS local.
-
-- **Pesos disponíveis no kit**: 400, 500, 700 (italic + non-italic). Se o CSS pedir 600, o browser sintetiza (renderiza falso-bold). Se quiser evitar, use 500 ou 700 explícitos onde tiver 600.
 
 ## Regras de execução
 
