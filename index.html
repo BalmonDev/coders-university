@@ -972,6 +972,17 @@
         transition: none !important;
       }
     }
+    @media (max-width: 900px) {
+      .anim {
+        transform: translateY(0.6944rem);
+        transition: opacity .45s cubic-bezier(0.22, 1, 0.36, 1),
+                    transform .45s cubic-bezier(0.22, 1, 0.36, 1);
+        transition-delay: 0ms;
+      }
+      .anim.anim-right { transform: translateX(0.6944rem); }
+      .anim.anim-left { transform: translateX(-0.6944rem); }
+      .anim.anim-scale { transform: scale(0.96); }
+    }
 
     @media (max-width: 1024px) {
       .esic-section { padding: 5rem 1.5rem; min-height: auto; }
@@ -1350,6 +1361,7 @@
       margin: 0;
     }
     @media (max-width: 900px) {
+      .pain-card p { line-height: 1.5; }
       .pain-cards { grid-template-columns: 1fr; gap: 1.1111rem; margin-top: 3.3333rem; }
       .pain-card { gap: 2.5rem; padding: 1.6667rem; }
     }
@@ -2776,6 +2788,7 @@
       .programas { padding: 4.4444rem 1.5rem; }
       .programas-grid { grid-template-columns: 1fr; }
       .programa-card { min-height: auto; padding: 1.9444rem 1.6667rem; }
+      .programa-title { max-width: none; }
       .programa-foot { flex-direction: column; align-items: flex-start; gap: 0.8333rem; }
       .programa-tags { justify-content: flex-start; }
     }
@@ -3519,7 +3532,7 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
 </head>
 <body>
-  <a href="bolsa.html" class="announce" aria-label="Pós-Graduação em Engenharia de IA — saiba mais">
+  <a href="/bolsa" class="announce" aria-label="Pós-Graduação em Engenharia de IA — saiba mais">
     <span class="announce-text">🎓 Pós-Graduação em Engenharia de IA · Chancela ESIC Internacional · Vagas limitadas — 1ª turma</span>
     <span class="announce-icon" aria-hidden="true">
       <svg viewBox="0 0 15 14" fill="none">
@@ -3536,7 +3549,7 @@
         </a>
 
         <div class="auth-actions">
-          <a href="bolsa.html" class="btn btn-signup">Quero tentar uma bolsa</a>
+          <a href="/bolsa" class="btn btn-signup">Quero tentar uma bolsa</a>
         </div>
       </div>
     </div>
@@ -3564,7 +3577,7 @@
         </div>
 
         <div class="hero-ctas anim" style="--anim-delay: 500ms;">
-          <a href="bolsa.html" class="cta-primary">
+          <a href="/bolsa" class="cta-primary">
             <span>Quero tentar uma bolsa</span>
             <span class="cta-arrow" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none">
@@ -3631,7 +3644,7 @@
           </div>
           <p class="esic-desc anim" style="--anim-delay: 250ms;">Ao concluir a Pós, você recebe um <strong>diploma com chancela da ESIC Internacional</strong>, fundada em 1965 em Madrid e presente em mais de 30 países. Quando um recrutador europeu ou americano vê ESIC no seu currículo, ele já sabe o que é. Esse reconhecimento vale dinheiro e abre portas que um certificado local simplesmente não abre.</p>
         </div>
-        <a href="bolsa.html" class="cta-primary esic-cta anim" style="--anim-delay: 400ms;">
+        <a href="/bolsa" class="cta-primary esic-cta anim" style="--anim-delay: 400ms;">
           <span>Quero tentar uma bolsa</span>
           <span class="cta-arrow" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none">
@@ -3858,7 +3871,7 @@
 
       <div class="profile-cta-row anim" style="--anim-delay: 200ms;">
         <span class="profile-cta-note"><span class="dot"></span>Bolsas limitadas · 2026.1</span>
-        <a href="bolsa.html" class="cta-primary">
+        <a href="/bolsa" class="cta-primary">
           <span>Quero tentar uma bolsa</span>
           <span class="cta-arrow" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none">
@@ -4192,7 +4205,7 @@
             <span class="pain-eyebrow anim">FAQ</span>
             <h2 class="section-title anim" style="--anim-delay: 100ms;">Tire suas dúvidas<br><span class="grad">antes de começar</span></h2>
             <p class="faq-head-desc anim" style="--anim-delay: 200ms;">As perguntas mais comuns sobre a Pós, reunidas em um lugar. Se a sua não estiver aqui, fale com a nossa equipe e respondemos no mesmo dia.</p>
-            <a href="bolsa.html" class="cta-primary anim" style="--anim-delay: 300ms;">
+            <a href="/bolsa" class="cta-primary anim" style="--anim-delay: 300ms;">
               <span>Quero tentar uma bolsa</span>
               <span class="cta-arrow" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none">
@@ -4313,7 +4326,7 @@
         <div class="final-cta-bottom">
           <p class="final-cta-sub anim" style="--anim-delay: 200ms;">Clique no botão, responda algumas perguntas sobre seu perfil e nossa equipe avalia se você tem direito a uma <strong>bolsa parcial</strong> para a primeira turma. Vagas de bolsa são <strong>limitadas</strong>.</p>
           <div class="anim" style="--anim-delay: 300ms;">
-            <a href="bolsa.html" class="cta-primary">
+            <a href="/bolsa" class="cta-primary">
               <span>Quero tentar uma bolsa</span>
               <span class="cta-arrow" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none">
@@ -4366,7 +4379,7 @@
           <h5>Suporte</h5>
           <ul class="footer-links">
             <li><a href="#faq">FAQ</a></li>
-            <li><a href="bolsa.html">Quero uma bolsa</a></li>
+            <li><a href="/bolsa">Quero uma bolsa</a></li>
             <li><a href="#">Falar no WhatsApp</a></li>
             <li><a href="mailto:suporte@codersuniversity.com.br">suporte@codersuniversity.com.br</a></li>
           </ul>
