@@ -14,10 +14,14 @@
   <link rel="icon" type="image/png" href="assets/favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://use.typekit.net" crossorigin>
+  <link rel="preconnect" href="https://p.typekit.net" crossorigin>
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="preconnect" href="https://esm.sh" crossorigin>
   <link rel="preload" as="image" href="assets/profressors.avif" type="image/avif" fetchpriority="high" />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Sora:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.typekit.net/lxp1meo.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://use.typekit.net/lxp1meo.css"></noscript>
   <style>
     /* ===== Fluid responsive root =====
        Baseline: 1440px design. 1rem == 1vw (so 1rem == 14.4px @ 1440px viewport).
@@ -48,7 +52,7 @@
       padding: 0;
       background: var(--bg);
       color: var(--text);
-      font-family: "NexaText", "Nexa Text", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: "nexa-text", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       overflow-x: clip;
@@ -436,7 +440,7 @@
     }
     .hero-pill-icon svg { width: 100%; height: 100%; display: block; }
     .hero-pill-text {
-      font-family: "NexaText", "Inter", sans-serif;
+      font-family: "nexa-text", "Inter", sans-serif;
       font-weight: 700;
       font-size: 0.9722rem;
       line-height: 1.2056rem;
@@ -470,7 +474,7 @@
       width: 100%;
     }
     .hero-title {
-      font-family: "NexaText", "Inter", sans-serif;
+      font-family: "nexa-text", "Inter", sans-serif;
       font-weight: 400;
       font-size: clamp(2.5rem, 4.2vw, 3.6111rem);
       line-height: 1.0;
@@ -613,7 +617,7 @@
       gap: 0.6944rem;
     }
     .hero-tag .name {
-      font-family: "NexaText", "Inter", sans-serif;
+      font-family: "nexa-text", "Inter", sans-serif;
       font-weight: 700;
       font-size: 1.7rem;
       line-height: 1.1;
@@ -621,7 +625,7 @@
       color: #fff;
     }
     .hero-tag .role {
-      font-family: "NexaText", "Inter", sans-serif;
+      font-family: "nexa-text", "Inter", sans-serif;
       font-weight: 400;
       font-size: 1rem;
       line-height: 1.1;
@@ -715,7 +719,7 @@
       min-width: 0;
     }
     .stat-num {
-      font-family: "NexaText", "Inter", sans-serif;
+      font-family: "nexa-text", "Inter", sans-serif;
       font-weight: 700;
       font-size: 2.7778rem;
       line-height: 1.1;
@@ -724,7 +728,7 @@
       white-space: nowrap;
     }
     .stat-label {
-      font-family: "NexaText", "Inter", sans-serif;
+      font-family: "nexa-text", "Inter", sans-serif;
       font-weight: 400;
       font-size: 0.9722rem;
       line-height: 1.1;
@@ -812,7 +816,7 @@
       margin: 0;
     }
     .esic-title {
-      font-family: "NexaText", "Inter", sans-serif;
+      font-family: "nexa-text", "Inter", sans-serif;
       font-weight: 400;
       font-size: clamp(2.2222rem, 3.5vw, 2.7778rem);
       line-height: 1.1;
@@ -969,7 +973,7 @@
       margin: 0 0 1.3889rem;
     }
     .section-title {
-      font-family: "NexaText", "Inter", sans-serif;
+      font-family: "nexa-text", "Inter", sans-serif;
       font-weight: 400;
       font-size: clamp(2.2222rem, 3.6vw, 3.3333rem);
       line-height: 1.05;
@@ -1087,7 +1091,7 @@
     /* Watermark gigante (números atrás do conteúdo) */
     .watermark {
       position: absolute;
-      font-family: "NexaText", "Inter", sans-serif;
+      font-family: "nexa-text", "Inter", sans-serif;
       font-weight: 700;
       font-size: 13.8889rem;
       letter-spacing: -0.6944rem;
@@ -1210,7 +1214,7 @@
       margin: 0;
     }
     .pain-title {
-      font-family: "NexaText", "Inter", sans-serif;
+      font-family: "nexa-text", "Inter", sans-serif;
       font-weight: 400;
       font-size: clamp(2.2222rem, 4vw, 3.3333rem);
       line-height: 1.0;
@@ -1264,7 +1268,7 @@
       gap: 1.1111rem;
     }
     .pain-card-tag {
-      font-family: "NexaText", "Inter", sans-serif;
+      font-family: "nexa-text", "Inter", sans-serif;
       font-weight: 700;
       font-size: 0.9722rem;
       line-height: 1.7083rem;
@@ -1292,7 +1296,7 @@
       gap: 0.6944rem;
     }
     .pain-card h3 {
-      font-family: "NexaText", "Inter", sans-serif;
+      font-family: "nexa-text", "Inter", sans-serif;
       font-weight: 700;
       font-size: 1.6667rem;
       line-height: 1.2;
@@ -1387,7 +1391,7 @@
       min-width: 0;
     }
     .faculty-photo-name {
-      font-family: "NexaText", "Inter", sans-serif;
+      font-family: "nexa-text", "Inter", sans-serif;
       font-weight: 700;
       font-size: 1.5278rem;
       line-height: 1.1;
@@ -1396,7 +1400,7 @@
       margin: 0;
     }
     .faculty-photo-role {
-      font-family: "NexaText", "Inter", sans-serif;
+      font-family: "nexa-text", "Inter", sans-serif;
       font-weight: 400;
       font-size: 0.8333rem;
       line-height: 1.1;
@@ -1417,7 +1421,7 @@
       padding: 1.3889rem 2.2222rem 2.2222rem;
     }
     .faculty-photo-bio-text {
-      font-family: "NexaText", "Inter", sans-serif;
+      font-family: "nexa-text", "Inter", sans-serif;
       font-weight: 400;
       font-size: 1.25rem;
       line-height: 1.4;
@@ -1486,7 +1490,7 @@
       margin-top: 0.5556rem;
     }
     .problem-quote-text {
-      font-family: "NexaText", "Inter", sans-serif;
+      font-family: "nexa-text", "Inter", sans-serif;
       font-weight: 400;
       font-size: clamp(1.9444rem, 2.6vw, 2.6389rem);
       line-height: 1.25;
@@ -1607,7 +1611,7 @@
     .faculty-initials {
       position: relative;
       z-index: 1;
-      font-family: "NexaText", "Inter", sans-serif;
+      font-family: "nexa-text", "Inter", sans-serif;
       font-weight: 700;
       font-size: clamp(5rem, 9vw, 8.3333rem);
       letter-spacing: -0.3472rem;
@@ -1658,7 +1662,7 @@
       background: #44d62c;
     }
     .faculty-name {
-      font-family: "NexaText", "Inter", sans-serif;
+      font-family: "nexa-text", "Inter", sans-serif;
       font-weight: 700;
       font-size: 2.2222rem;
       line-height: 1.05;
@@ -1815,7 +1819,7 @@
     .profile-col--fit .profile-col-tag .glyph { color: #2bb31a; }
     .profile-col--skip .profile-col-tag .glyph { color: #e63946; }
     .profile-col-title {
-      font-family: "NexaText", "Inter", sans-serif;
+      font-family: "nexa-text", "Inter", sans-serif;
       font-weight: 600;
       font-size: 1.6667rem;
       line-height: 1.1;
@@ -1939,7 +1943,7 @@
       text-transform: uppercase;
     }
     .phase-title {
-      font-family: "NexaText", "Inter", sans-serif;
+      font-family: "nexa-text", "Inter", sans-serif;
       font-weight: 700;
       font-size: 1.6667rem;
       line-height: 1.1;
@@ -2026,7 +2030,7 @@
       flex-wrap: wrap;
     }
     .module-name {
-      font-family: "NexaText", sans-serif;
+      font-family: "nexa-text", sans-serif;
       font-weight: 700;
       font-size: 1.1111rem;
       line-height: 1.3;
@@ -2253,7 +2257,7 @@
       margin-bottom: 1.1111rem;
     }
     .pf-card-title {
-      font-family: "NexaText", "Inter", sans-serif;
+      font-family: "nexa-text", "Inter", sans-serif;
       font-weight: 600;
       font-size: 1.4583rem;
       line-height: 1.1;
@@ -2428,7 +2432,7 @@
     .market-card--pistache .market-source { color: #2bb31a; }
 
     .market-title {
-      font-family: "NexaText", "Inter", sans-serif;
+      font-family: "nexa-text", "Inter", sans-serif;
       font-weight: 700;
       font-size: clamp(1.6667rem, 2.4vw, 2.0833rem);
       line-height: 1.05;
@@ -2477,7 +2481,7 @@
       color: rgba(0,0,0,0.5);
     }
     .market-viz-big {
-      font-family: "NexaText", sans-serif;
+      font-family: "nexa-text", sans-serif;
       font-weight: 700;
       font-size: clamp(2.5rem, 4.2vw, 3.3333rem);
       line-height: 1;
@@ -2519,7 +2523,7 @@
     .market-viz-rows li:last-child { border-bottom: 0; padding-bottom: 0; }
     .market-viz-row-label { color: rgba(0,0,0,0.6); }
     .market-viz-row-value {
-      font-family: "NexaText", sans-serif;
+      font-family: "nexa-text", sans-serif;
       font-weight: 700;
       font-size: 1.1111rem;
       color: #050505;
@@ -2648,7 +2652,7 @@
     }
     .programa-card:hover .programa-code { opacity: 0.75; }
     .programa-title {
-      font-family: "NexaText", "Inter", sans-serif;
+      font-family: "nexa-text", "Inter", sans-serif;
       font-weight: 600;
       font-size: 1.4583rem;
       line-height: 1.08;
@@ -2876,7 +2880,7 @@
       padding: 1.5278rem 0.5556rem;
       cursor: pointer;
       user-select: none;
-      font-family: "NexaText", sans-serif;
+      font-family: "nexa-text", sans-serif;
       font-weight: 600;
       font-size: 1.1111rem;
       line-height: 1.35;
@@ -2960,7 +2964,7 @@
       margin: 0;
     }
     .final-cta-title {
-      font-family: "NexaText", "Inter", sans-serif;
+      font-family: "nexa-text", "Inter", sans-serif;
       font-weight: 400;
       font-size: clamp(2.2222rem, 3.6vw, 3.3333rem);
       line-height: 1.05;
