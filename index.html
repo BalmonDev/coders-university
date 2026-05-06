@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="preconnect" href="https://esm.sh" crossorigin>
   <link rel="preload" as="image" href="assets/profressors.avif" type="image/avif" fetchpriority="high" />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Sora:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://use.typekit.net/lxp1meo.css" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="https://use.typekit.net/lxp1meo.css"></noscript>
   <style>
@@ -288,6 +288,32 @@
       .nav { padding: 0.9722rem 1.1111rem; }
       .announce-text { white-space: normal; text-align: center; font-size: 0.8333rem; line-height: 0.9722rem; }
 
+      .site-header {
+        position: fixed;
+        top: auto;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        border-bottom: none;
+        border-top: 0.0694rem solid rgba(255, 255, 255, 0.06);
+        transform: translateY(110%);
+        transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .site-header.is-scrolled {
+        transform: translateY(0);
+        border-top-color: var(--border-soft);
+      }
+      .hero-logo-mobile {
+        display: block;
+        width: 14rem;
+        margin: 0 auto 1.6667rem;
+      }
+      .hero-logo-mobile img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
       .mobile-drawer-backdrop {
         display: block;
         position: fixed;
@@ -372,6 +398,7 @@
       overflow: hidden;
       isolation: isolate;
     }
+    @media (min-width: 901px) { .hero-logo-mobile { display: none; } }
     .bg-blinds {
       position: absolute;
       inset: 0;
@@ -457,7 +484,7 @@
       padding: 0.2778rem 0.5556rem;
       background: #000;
       color: #fff;
-      font-family: "Sora", "Inter", sans-serif;
+      font-family: "nexa-text", sans-serif;
       font-weight: 400;
       font-size: 0.6944rem;
       line-height: 0.6944rem;
@@ -678,7 +705,15 @@
       }
       .hero-tag-levir { left: 8%; bottom: 10%; }
       .hero-tag-castig { left: 50%; bottom: 18%; }
-      .hero-folder { width: 24.7vw; height: auto; aspect-ratio: 361 / 67; }
+      .hero-folder { width: 35vw; height: auto; aspect-ratio: 361 / 67; }
+    }
+    @media (max-width: 900px) {
+      .hero-content { align-items: center; text-align: center; }
+      .hero-stack { align-items: center; text-align: center; }
+      .hero-text { align-items: center; text-align: center; }
+      .hero-title,
+      .hero-sub { text-align: center; }
+      .hero-ctas { justify-content: center; }
     }
     @media (max-width: 640px) {
       .hero-content { gap: 2.2222rem; padding: 2.7778rem 0 2.2222rem; }
@@ -1109,7 +1144,7 @@
       align-items: center;
       gap: 0.4167rem;
       padding: 0.4167rem 0.8333rem;
-      font-family: "Sora", "Inter", sans-serif;
+      font-family: "nexa-text", sans-serif;
       font-weight: 500;
       font-size: 0.7639rem;
       line-height: 1;
@@ -1137,7 +1172,7 @@
 
     /* Mono code-style text */
     .mono {
-      font-family: "Sora", "Inter", sans-serif;
+      font-family: "nexa-text", sans-serif;
       font-weight: 500;
       letter-spacing: 0.1em;
     }
@@ -1306,9 +1341,9 @@
       margin: 0;
     }
     .pain-card p {
-      font-family: "Sora", "Inter", sans-serif;
+      font-family: "nexa-text", sans-serif;
       font-weight: 400;
-      font-size: 0.9722rem;
+      font-size: 1.111rem;
       line-height: 1.1958rem;
       letter-spacing: -0.0194rem;
       color: #7f7f7f;
@@ -1317,6 +1352,11 @@
     @media (max-width: 900px) {
       .pain-cards { grid-template-columns: 1fr; gap: 1.1111rem; margin-top: 3.3333rem; }
       .pain-card { gap: 2.5rem; padding: 1.6667rem; }
+    }
+    @media (max-width: 640px) {
+      .esic-title,
+      .pain-title,
+      .section-title { font-size: 2.6rem; }
     }
 
     /* Faculty — Photo cards style (Figma 2210:42035) */
@@ -1445,9 +1485,9 @@
     @media (max-width: 900px) {
       .faculty-photos { grid-template-columns: 1fr; gap: 1.3889rem; margin-top: 3.3333rem; }
       .faculty-photo-card { padding-bottom: 6.1111rem; }
-      .faculty-photo-plate { height: 6.1111rem; gap: 1.1111rem; padding: 0 1.25rem; }
-      .faculty-photo-shield { width: 3.8889rem; height: 3.8889rem; }
-      .faculty-photo-name { font-size: 1.25rem; }
+      .faculty-photo-plate { height: 6.1111rem; gap: 1.1111rem; padding: 0 1.25rem 0 0; }
+      .faculty-photo-shield { width: 6.1111rem; height: 6.1111rem; }
+      .faculty-photo-name { font-size: 1.6rem; }
       .faculty-photo-bio-content { padding: 1.1111rem 1.3889rem 1.6667rem; }
       .faculty-photo-bio-text { font-size: 1rem; }
     }
@@ -1649,7 +1689,7 @@
       display: inline-flex;
       align-items: center;
       gap: 0.6944rem;
-      font-family: "Sora", "Inter", sans-serif;
+      font-family: "nexa-text", sans-serif;
       font-size: 0.7639rem;
       font-weight: 500;
       letter-spacing: 0.12em;
@@ -1755,7 +1795,7 @@
       display: flex;
       align-items: baseline;
       gap: 0.6944rem;
-      font-family: "Sora", "Inter", sans-serif;
+      font-family: "nexa-text", sans-serif;
       font-size: 0.7639rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
@@ -1799,7 +1839,7 @@
       display: inline-flex;
       align-items: center;
       gap: 0.5556rem;
-      font-family: "Sora", "Inter", sans-serif;
+      font-family: "nexa-text", sans-serif;
       font-weight: 600;
       font-size: 0.7639rem;
       letter-spacing: 0.16em;
@@ -1870,7 +1910,7 @@
       border-top: 0.0694rem solid rgba(0,0,0,0.1);
     }
     .profile-cta-note {
-      font-family: "Sora", "Inter", sans-serif;
+      font-family: "nexa-text", sans-serif;
       font-size: 0.7639rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
@@ -1936,7 +1976,7 @@
       padding-left: 0.5556rem;
     }
     .phase-num {
-      font-family: "Sora", "Inter", sans-serif;
+      font-family: "nexa-text", sans-serif;
       font-size: 0.7639rem;
       font-weight: 500;
       letter-spacing: 0.18em;
@@ -1989,7 +2029,7 @@
       justify-content: center;
       background: #030303;
       border: 0.0694rem solid rgba(68,214,44,0.4);
-      font-family: "Sora", sans-serif;
+      font-family: "nexa-text", sans-serif;
       font-size: 0.9028rem;
       font-weight: 600;
       color: #44d62c;
@@ -2055,7 +2095,7 @@
       justify-content: center;
       flex-shrink: 0;
       transition: all 0.3s ease;
-      font-family: "Sora", sans-serif;
+      font-family: "nexa-text", sans-serif;
       font-size: 1.1111rem;
       color: rgba(255,255,255,0.6);
       line-height: 1;
@@ -2082,7 +2122,7 @@
       gap: 0.5556rem;
     }
     .module-project-label {
-      font-family: "Sora", sans-serif;
+      font-family: "nexa-text", sans-serif;
       font-size: 0.6944rem;
       font-weight: 500;
       letter-spacing: 0.14em;
@@ -2235,7 +2275,7 @@
       color: #000;
     }
     .pf-card-num {
-      font-family: "Sora", "Inter", sans-serif;
+      font-family: "nexa-text", sans-serif;
       font-weight: 500;
       font-size: 0.7639rem;
       letter-spacing: 0.12em;
@@ -2250,7 +2290,7 @@
       padding: 0.2778rem 0.6944rem;
       background: #44d62c;
       color: #000;
-      font-family: "Sora", "Inter", sans-serif;
+      font-family: "nexa-text", sans-serif;
       font-weight: 600;
       font-size: 0.7639rem;
       letter-spacing: 0.06em;
@@ -2289,7 +2329,7 @@
     }
     .pf-tag {
       display: inline-block;
-      font-family: "Sora", "Inter", sans-serif;
+      font-family: "nexa-text", sans-serif;
       font-weight: 500;
       font-size: 0.6944rem;
       letter-spacing: 0.04em;
@@ -2422,7 +2462,7 @@
       gap: 1.1111rem;
     }
     .market-source {
-      font-family: "Sora", "Inter", sans-serif;
+      font-family: "nexa-text", sans-serif;
       font-size: 0.7639rem;
       font-weight: 500;
       letter-spacing: 0.14em;
@@ -2442,7 +2482,7 @@
     }
     .market-desc {
       font-family: "Montserrat", "Inter", sans-serif;
-      font-size: 0.9375rem;
+      font-size: 1.111rem;
       line-height: 1.55;
       margin: 0;
     }
@@ -2474,7 +2514,7 @@
     .market-card--black .market-viz-row-value { color: #ffffff; }
 
     .market-viz-label {
-      font-family: "Sora", "Inter", sans-serif;
+      font-family: "nexa-text", sans-serif;
       font-size: 0.6944rem;
       font-weight: 600;
       letter-spacing: 0.14em;
@@ -2535,7 +2575,7 @@
       display: inline-flex;
       align-items: center;
       gap: 0.4167rem;
-      font-family: "Sora", "Inter", sans-serif;
+      font-family: "nexa-text", sans-serif;
       font-size: 0.8333rem;
       font-weight: 600;
       color: #2bb31a;
@@ -2563,7 +2603,6 @@
       color: #fff;
       padding: 8.3333rem 5rem;
       overflow: hidden;
-      border-bottom: 0.0694rem solid var(--border-soft);
     }
     .programas::after {
       content: "";
@@ -2644,7 +2683,7 @@
       margin-bottom: 2.7778rem;
     }
     .programa-code {
-      font-family: "Sora", "Inter", sans-serif;
+      font-family: "nexa-text", sans-serif;
       font-weight: 500;
       font-size: 0.7639rem;
       letter-spacing: 0.12em;
@@ -2668,7 +2707,7 @@
       padding: 0.2778rem 0.6944rem;
       background: #44d62c;
       color: #000;
-      font-family: "Sora", "Inter", sans-serif;
+      font-family: "nexa-text", sans-serif;
       font-weight: 600;
       font-size: 0.7639rem;
       letter-spacing: 0.06em;
@@ -2707,7 +2746,7 @@
     }
     .programa-tag {
       display: inline-block;
-      font-family: "Sora", "Inter", sans-serif;
+      font-family: "nexa-text", sans-serif;
       font-weight: 500;
       font-size: 0.6944rem;
       letter-spacing: 0.04em;
@@ -2900,7 +2939,7 @@
       color: rgba(0,0,0,0.55);
       flex-shrink: 0;
       transition: transform 0.3s ease, color 0.3s ease;
-      font-family: "Sora", sans-serif;
+      font-family: "nexa-text", sans-serif;
       font-size: 2.0833rem;
       font-weight: 200;
       line-height: 1;
@@ -3006,7 +3045,7 @@
       text-align: left;
     }
     .final-cta-card-label {
-      font-family: "Sora", sans-serif;
+      font-family: "nexa-text", sans-serif;
       font-size: 0.7639rem;
       font-weight: 500;
       letter-spacing: 0.16em;
@@ -3045,7 +3084,7 @@
       background: rgba(68,214,44,0.1);
       border: 0.0694rem solid rgba(68,214,44,0.3);
       border-radius: 69.375rem;
-      font-family: "Sora", sans-serif;
+      font-family: "nexa-text", sans-serif;
       font-size: 0.8333rem;
       font-weight: 500;
       letter-spacing: 0.06em;
@@ -3110,7 +3149,7 @@
       margin-top: 2.5rem;
     }
     @media (max-width: 900px) {
-      .final-cta { padding: 4.4444rem 1.5rem 3.3333rem; }
+      .final-cta { padding: 4.4444rem 0 3.3333rem; }
       .final-cta-col--text { gap: 4.4444rem; max-width: 100%; }
       .final-cta-title { letter-spacing: -0.1042rem; }
       .final-cta-button { font-size: 1.1111rem; height: 3.8889rem; padding-left: 1.6667rem; }
@@ -3123,6 +3162,7 @@
         width: 100%;
         min-height: 3.3333rem;
       }
+      .final-cta-title { font-size: 2.6rem; }
     }
 
     /* =================================================
@@ -3150,7 +3190,7 @@
       padding-right: 2.7778rem;
     }
     .cta-marquee-item {
-      font-family: "Sora", "Inter", sans-serif;
+      font-family: "nexa-text", sans-serif;
       font-size: 0.9722rem;
       font-weight: 600;
       letter-spacing: 0.16em;
@@ -3227,14 +3267,15 @@
       .problem-tab,
       .market-head-banner,
       .closing-corner-tr {
-        width: 24.7vw;
+        width: 35vw;
         height: auto;
         aspect-ratio: 361 / 67;
       }
+      .faculty-head-banner { width: 160%; max-width: none; }
       .hero-folder,
-      .problem-tab { margin: 0 -0.5px -0.5px 0; }
-      .market-head-banner { margin: 0 0 -0.5px -0.5px; }
-      .closing-corner-tr { margin: -0.5px -0.5px 0 0; }
+      .problem-tab { margin: 0 -2px -2px 0; }
+      .market-head-banner { margin: 0 0 -2px -2px; }
+      .closing-corner-tr { margin: -2px -2px 0 0; }
     }
 
     .site-footer {
@@ -3279,7 +3320,7 @@
       background: linear-gradient(180deg, transparent, rgba(255,255,255,0.1) 30%, rgba(255,255,255,0.1) 70%, transparent);
     }
     .footer-col h5 {
-      font-family: "Sora", sans-serif;
+      font-family: "nexa-text", sans-serif;
       font-size: 0.7639rem;
       font-weight: 500;
       letter-spacing: 0.16em;
@@ -3373,7 +3414,7 @@
       background: rgba(255,255,255,0.04);
       border: 0.0694rem solid rgba(255,255,255,0.08);
       border-radius: 69.375rem;
-      font-family: "Sora", sans-serif;
+      font-family: "nexa-text", sans-serif;
       font-size: 0.6944rem;
       font-weight: 500;
       letter-spacing: 0.1em;
@@ -3390,7 +3431,7 @@
     .footer-legal {
       display: flex;
       gap: 1.25rem;
-      font-family: "Sora", sans-serif;
+      font-family: "nexa-text", sans-serif;
       font-size: 0.7639rem;
     }
     .footer-legal a {
@@ -3467,11 +3508,18 @@
       .sticky-text { font-size: 0.8333rem; }
       .sticky-text strong { display: block; }
     }
+    @media (max-width: 640px) {
+      .pain-sub,
+      .profile-header-desc,
+      .portfolio-header-desc,
+      .programas-header-desc,
+      .faq-head-desc { font-size: 1.15rem; }
+    }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
 </head>
 <body>
-  <a href="#cadastrar" class="announce" aria-label="Pós-Graduação em Engenharia de IA — saiba mais">
+  <a href="bolsa.html" class="announce" aria-label="Pós-Graduação em Engenharia de IA — saiba mais">
     <span class="announce-text">🎓 Pós-Graduação em Engenharia de IA · Chancela ESIC Internacional · Vagas limitadas — 1ª turma</span>
     <span class="announce-icon" aria-hidden="true">
       <svg viewBox="0 0 15 14" fill="none">
@@ -3488,7 +3536,7 @@
         </a>
 
         <div class="auth-actions">
-          <a href="#cadastrar" class="btn btn-signup">Quero tentar uma bolsa</a>
+          <a href="bolsa.html" class="btn btn-signup">Quero tentar uma bolsa</a>
         </div>
       </div>
     </div>
@@ -3498,6 +3546,9 @@
 
     <div class="stage-inner">
       <div class="hero-content">
+        <a href="#" class="hero-logo-mobile" aria-label="Coders University">
+          <img width="810" height="227" loading="eager" decoding="async" src="assets/logo-coders-university.avif" alt="Coders University" />
+        </a>
         <div class="hero-stack">
           <div class="hero-pill anim anim-scale" style="--anim-delay: 100ms;">
             <div class="hero-pill-left">
@@ -3513,7 +3564,7 @@
         </div>
 
         <div class="hero-ctas anim" style="--anim-delay: 500ms;">
-          <a href="#cadastrar" class="cta-primary">
+          <a href="bolsa.html" class="cta-primary">
             <span>Quero tentar uma bolsa</span>
             <span class="cta-arrow" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none">
@@ -3580,7 +3631,7 @@
           </div>
           <p class="esic-desc anim" style="--anim-delay: 250ms;">Ao concluir a Pós, você recebe um <strong>diploma com chancela da ESIC Internacional</strong>, fundada em 1965 em Madrid e presente em mais de 30 países. Quando um recrutador europeu ou americano vê ESIC no seu currículo, ele já sabe o que é. Esse reconhecimento vale dinheiro e abre portas que um certificado local simplesmente não abre.</p>
         </div>
-        <a href="#cadastrar" class="cta-primary esic-cta anim" style="--anim-delay: 400ms;">
+        <a href="bolsa.html" class="cta-primary esic-cta anim" style="--anim-delay: 400ms;">
           <span>Quero tentar uma bolsa</span>
           <span class="cta-arrow" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none">
@@ -3807,7 +3858,7 @@
 
       <div class="profile-cta-row anim" style="--anim-delay: 200ms;">
         <span class="profile-cta-note"><span class="dot"></span>Bolsas limitadas · 2026.1</span>
-        <a href="#cadastrar" class="cta-primary">
+        <a href="bolsa.html" class="cta-primary">
           <span>Quero tentar uma bolsa</span>
           <span class="cta-arrow" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none">
@@ -3831,8 +3882,8 @@
         <p class="programas-header-desc anim" style="--anim-delay: 200ms;">Cada módulo termina com um projeto prático. Você não sai com um certificado na mão. Você sai com <strong>12 soluções reais construídas por você.</strong></p>
       </div>
 
-      <div class="programas-grid">
-        <div class="programa-card anim" style="--anim-delay: 0ms;">
+      <div class="programas-grid anim">
+        <div class="programa-card">
           <div class="programa-top">
             <span class="programa-code">[01]</span>
           </div>
@@ -3847,7 +3898,7 @@
           </div>
         </div>
 
-        <div class="programa-card anim" style="--anim-delay: 80ms;">
+        <div class="programa-card">
           <div class="programa-top">
             <span class="programa-code">[02]</span>
           </div>
@@ -3862,7 +3913,7 @@
           </div>
         </div>
 
-        <div class="programa-card anim" style="--anim-delay: 160ms;">
+        <div class="programa-card">
           <div class="programa-top">
             <span class="programa-code">[03]</span>
           </div>
@@ -3877,7 +3928,7 @@
           </div>
         </div>
 
-        <div class="programa-card anim" style="--anim-delay: 240ms;">
+        <div class="programa-card">
           <div class="programa-top">
             <span class="programa-code">[04]</span>
           </div>
@@ -3892,7 +3943,7 @@
           </div>
         </div>
 
-        <div class="programa-card anim" style="--anim-delay: 320ms;">
+        <div class="programa-card">
           <div class="programa-top">
             <span class="programa-code">[05]</span>
           </div>
@@ -3907,7 +3958,7 @@
           </div>
         </div>
 
-        <div class="programa-card anim" style="--anim-delay: 400ms;">
+        <div class="programa-card">
           <div class="programa-top">
             <span class="programa-code">[06]</span>
           </div>
@@ -3922,7 +3973,7 @@
           </div>
         </div>
 
-        <div class="programa-card anim" style="--anim-delay: 0ms;">
+        <div class="programa-card">
           <div class="programa-top">
             <span class="programa-code">[07]</span>
           </div>
@@ -3937,7 +3988,7 @@
           </div>
         </div>
 
-        <div class="programa-card anim" style="--anim-delay: 80ms;">
+        <div class="programa-card">
           <div class="programa-top">
             <span class="programa-code">[08]</span>
           </div>
@@ -3952,7 +4003,7 @@
           </div>
         </div>
 
-        <div class="programa-card anim" style="--anim-delay: 160ms;">
+        <div class="programa-card">
           <div class="programa-top">
             <span class="programa-code">[09]</span>
           </div>
@@ -3967,7 +4018,7 @@
           </div>
         </div>
 
-        <div class="programa-card anim" style="--anim-delay: 240ms;">
+        <div class="programa-card">
           <div class="programa-top">
             <span class="programa-code">[10]</span>
           </div>
@@ -3982,7 +4033,7 @@
           </div>
         </div>
 
-        <div class="programa-card anim" style="--anim-delay: 320ms;">
+        <div class="programa-card">
           <div class="programa-top">
             <span class="programa-code">[11]</span>
           </div>
@@ -3997,7 +4048,7 @@
           </div>
         </div>
 
-        <div class="programa-card anim" style="--anim-delay: 400ms;">
+        <div class="programa-card">
           <div class="programa-top">
             <span class="programa-code">[12]</span>
           </div>
@@ -4028,9 +4079,9 @@
         <p class="portfolio-header-desc anim" style="--anim-delay: 200ms;"><strong>Todos os 12 módulos têm um projeto prático</strong> resolvendo um problema real de empresa. Nada de exercícios ou tutoriais. Os três mais impactantes:</p>
       </div>
 
-      <div class="portfolio-grid">
+      <div class="portfolio-grid anim">
         <div class="portfolio-side">
-          <article class="pf-card anim" style="--anim-delay: 120ms;">
+          <article class="pf-card">
             <span class="pf-card-num">// Projeto 01 — Estratégia</span>
             <h3 class="pf-card-title">AI Capability Assessment</h3>
             <p class="pf-card-desc">Recomendação executiva de adoção de IA para uma empresa real, com análise de trade-offs, matriz de risco e decisão técnica documentada. O tipo de entregável que C-levels usam para tomar decisões de milhões.</p>
@@ -4040,7 +4091,7 @@
             </div>
           </article>
 
-          <article class="pf-card anim" style="--anim-delay: 240ms;">
+          <article class="pf-card">
             <span class="pf-card-num">// Projeto 03 — Sistemas</span>
             <h3 class="pf-card-title">Context Engineering Platform</h3>
             <p class="pf-card-desc">Plataforma de contexto empresarial com gestão de memória de longo prazo, knowledge base estruturada e injeção de contexto dinâmico. A infraestrutura que times de AI Engineering nos EUA e Europa estão construindo agora.</p>
@@ -4051,7 +4102,7 @@
           </article>
         </div>
 
-        <article class="pf-card pf-card--featured anim" style="--anim-delay: 0ms;">
+        <article class="pf-card pf-card--featured">
           <img loading="lazy" decoding="async" src="assets/capstone.avif" alt="" class="pf-card-image" aria-hidden="true" />
           <span class="pf-card-num">// Projeto 12 — O projeto da sua carreira</span>
           <div class="pf-card-headline">
@@ -4141,7 +4192,7 @@
             <span class="pain-eyebrow anim">FAQ</span>
             <h2 class="section-title anim" style="--anim-delay: 100ms;">Tire suas dúvidas<br><span class="grad">antes de começar</span></h2>
             <p class="faq-head-desc anim" style="--anim-delay: 200ms;">As perguntas mais comuns sobre a Pós, reunidas em um lugar. Se a sua não estiver aqui, fale com a nossa equipe e respondemos no mesmo dia.</p>
-            <a href="#cadastrar" class="cta-primary anim" style="--anim-delay: 300ms;">
+            <a href="bolsa.html" class="cta-primary anim" style="--anim-delay: 300ms;">
               <span>Quero tentar uma bolsa</span>
               <span class="cta-arrow" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none">
@@ -4163,7 +4214,7 @@
                 <span class="faq-contact-value">Resposta em até 1h</span>
               </span>
             </a>
-            <a href="mailto:contato@coders.university" class="faq-contact" aria-label="Enviar email">
+            <a href="mailto:suporte@codersuniversity.com.br" class="faq-contact" aria-label="Enviar email">
               <span class="faq-contact-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
                   <rect x="3" y="5" width="18" height="14" rx="2"/>
@@ -4172,7 +4223,7 @@
               </span>
               <span class="faq-contact-text">
                 <span class="faq-contact-label">Email<svg class="faq-contact-arrow" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 11L11 3M11 3H5M11 3V9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-                <span class="faq-contact-value">contato@coders.university</span>
+                <span class="faq-contact-value">suporte@codersuniversity.com.br</span>
               </span>
             </a>
           </div>
@@ -4256,13 +4307,13 @@
             <span class="pulse" aria-hidden="true"></span>
             <span>12 vagas de bolsa restantes · Encerra em 7 dias</span>
           </div>
-          <h1 class="final-cta-title anim" style="--anim-delay: 100ms;">O mercado <span class="grad">não vai esperar</span> por você. A janela é <span class="grad">agora.</span></h1>
+          <h2 class="final-cta-title anim" style="--anim-delay: 100ms;">O mercado <span class="grad">não vai esperar</span> por você. A janela é <span class="grad">agora.</span></h2>
         </div>
 
         <div class="final-cta-bottom">
           <p class="final-cta-sub anim" style="--anim-delay: 200ms;">Clique no botão, responda algumas perguntas sobre seu perfil e nossa equipe avalia se você tem direito a uma <strong>bolsa parcial</strong> para a primeira turma. Vagas de bolsa são <strong>limitadas</strong>.</p>
           <div class="anim" style="--anim-delay: 300ms;">
-            <a href="#cadastrar" class="cta-primary">
+            <a href="bolsa.html" class="cta-primary">
               <span>Quero tentar uma bolsa</span>
               <span class="cta-arrow" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none">
@@ -4284,14 +4335,11 @@
           <a href="#" class="footer-logo"><img width="810" height="227" fetchpriority="high" loading="eager" decoding="async" src="assets/logo-coders-university.avif" alt="Coders University" /></a>
           <p class="footer-tagline">Pós-Graduação em Engenharia de IA com chancela ESIC Internacional. Forme-se para o mercado global.</p>
           <div class="footer-social">
-            <a href="#" aria-label="Instagram">
+            <a href="https://www.instagram.com/codersuniversity_/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor"/></svg>
             </a>
-            <a href="#" aria-label="LinkedIn">
+            <a href="https://www.linkedin.com/company/coderscompany" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14zM8 17V10H6v7h2zm-1-8.5a1.2 1.2 0 1 0 0-2.4 1.2 1.2 0 0 0 0 2.4zM18 17v-3.7c0-2-1.1-3-2.6-3-1.2 0-1.7.7-2 1.2V10h-2v7h2v-3.9c0-1 .2-1.7 1.4-1.7 1.2 0 1.2 1.1 1.2 1.7V17h2z"/></svg>
-            </a>
-            <a href="#" aria-label="GitHub">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2A10 10 0 0 0 8.84 21.5c.5.09.68-.22.68-.48 0-.24-.01-.87-.01-1.7-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85 0 1.34-.01 2.42-.01 2.75 0 .27.18.58.69.48A10 10 0 0 0 12 2z"/></svg>
             </a>
             <a href="#" aria-label="WhatsApp">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.05 4.91A9.82 9.82 0 0 0 12.04 2c-5.45 0-9.88 4.43-9.88 9.88 0 1.74.46 3.43 1.32 4.92L2 22l5.34-1.4a9.86 9.86 0 0 0 4.7 1.2c5.45 0 9.88-4.43 9.88-9.88 0-2.64-1.03-5.13-2.87-7.01zM12.04 20.07a8.21 8.21 0 0 1-4.18-1.14l-.3-.18-3.13.82.83-3.05-.2-.31a8.18 8.18 0 0 1-1.26-4.33c0-4.54 3.69-8.22 8.24-8.22 2.2 0 4.27.86 5.83 2.42a8.19 8.19 0 0 1 2.41 5.83c0 4.54-3.69 8.22-8.24 8.22zm4.5-6.16c-.25-.13-1.46-.72-1.69-.8-.23-.08-.39-.13-.56.13-.16.25-.64.8-.79.97-.14.16-.29.18-.54.06-.25-.13-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.39-1.72-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.43.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.13-.56-1.34-.77-1.84-.2-.49-.41-.42-.56-.42-.14-.01-.31-.01-.48-.01-.16 0-.43.06-.66.31-.23.25-.86.84-.86 2.05 0 1.21.88 2.38 1 2.55.13.16 1.74 2.66 4.21 3.73.59.25 1.05.4 1.41.51.59.19 1.13.16 1.55.1.47-.07 1.46-.59 1.66-1.17.21-.57.21-1.07.14-1.17-.06-.1-.22-.16-.47-.28z"/></svg>
@@ -4318,9 +4366,9 @@
           <h5>Suporte</h5>
           <ul class="footer-links">
             <li><a href="#faq">FAQ</a></li>
-            <li><a href="#cadastrar">Quero uma bolsa</a></li>
+            <li><a href="bolsa.html">Quero uma bolsa</a></li>
             <li><a href="#">Falar no WhatsApp</a></li>
-            <li><a href="mailto:contato@coders.university">contato@coders.university</a></li>
+            <li><a href="mailto:suporte@codersuniversity.com.br">suporte@codersuniversity.com.br</a></li>
           </ul>
         </div>
       </div>
