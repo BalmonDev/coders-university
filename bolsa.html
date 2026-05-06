@@ -6,6 +6,12 @@
   <meta name="robots" content="noindex,nofollow">
   <title>Quero tentar uma bolsa · Coders University</title>
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preconnect" href="https://typebot.co" crossorigin>
+  <link rel="dns-prefetch" href="https://typebot.co">
+  <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/@typebot.io/js@0.3/dist/web.js">
+
   <style>
     html, body {
       margin: 0;
@@ -28,7 +34,10 @@
   <typebot-standard></typebot-standard>
   <script type="module">
     import Typebot from 'https://cdn.jsdelivr.net/npm/@typebot.io/js@0.3/dist/web.js'
-    Typebot.initStandard({ typebot: 'posdeia-coders' })
+    Typebot.initStandard({
+      typebot: 'posdeia-coders',
+      apiHost: 'https://typebot.co'
+    })
   </script>
 </body>
 </html>
